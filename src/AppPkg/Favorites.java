@@ -1,9 +1,9 @@
 package AppPkg;
 
-public class Settings extends javax.swing.JFrame
+public class Favorites extends javax.swing.JFrame
 {
 
-    public Settings()
+    public Favorites()
     {
         initComponents();
     }
@@ -14,7 +14,7 @@ public class Settings extends javax.swing.JFrame
     {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Settings");
+        setTitle("Favorites");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -28,12 +28,11 @@ public class Settings extends javax.swing.JFrame
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[])
     {
-        new Settings().setVisible(true);
+        new Favorites().setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
