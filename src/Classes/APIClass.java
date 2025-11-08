@@ -46,5 +46,7 @@ public class APIClass {
 
     public int numResults(){
         JSONArray animalsArray = new JSONArray(responseBody);
+        //added dummy return statement  to let program compile
+        return 1;
     }
 }
