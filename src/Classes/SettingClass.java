@@ -30,8 +30,8 @@ public class SettingClass {
         this.textSize = size;
     }
 
-    public void setStyle(Font style) {
-        this.textStyle = style;
+    public void setStyle(String style) {
+        this.textStyle = new Font(style, 0, this.textSize);
     }
 
 }
