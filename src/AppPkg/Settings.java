@@ -115,7 +115,7 @@ public class Settings extends javax.swing.JFrame
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnHomeActionPerformed
     {//GEN-HEADEREND:event_btnHomeActionPerformed
-        new MainMenu().setVisible(true);
+        // new MainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
