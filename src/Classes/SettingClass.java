@@ -9,17 +9,21 @@ public class SettingClass {
     private Color textColor;
     private Font textStyle;
     private String style;
-    private String filePath;
+    final private String filePath;
 
-    // Constructor with file path
+
     public SettingClass(String filePath) {
+        /**
+         * extract saved setting from the csv file
+         * When can't find filePath, it creates a csv file with default settings
+         */
         this.filePath = filePath;
         File file = new File(filePath);
 
         if (!file.exists()) {
             System.out.println("Settings file not found — creating one with default value...");
             setDefaultSettings();
-            saveSettingsToCSV();  // create file with defaults
+            saveSettingsToCSV();
         } else {
             loadSettingsFromCSV();
         }
@@ -27,6 +31,9 @@ public class SettingClass {
 
     // Default constructor (if no file path given)
     public SettingClass() {
+        /**
+         * reads from a fixed filePath when no filePath is given
+         */
         this.filePath = ("settings.csv");
         File file = new File(filePath);
 
@@ -41,6 +48,9 @@ public class SettingClass {
 
 
     private void loadSettingsFromCSV() {
+        /**
+         * read and parse setting info from csv, the format is (textSize,textColorR,textColorG,textColorB,style)
+         */
         try (BufferedReader info = new BufferedReader(new FileReader(filePath))) {
             String header = info.readLine();
             String line = info.readLine();
@@ -71,6 +81,9 @@ public class SettingClass {
 
 
     private void saveSettingsToCSV() {
+        /**
+         * write the current setting to the csv file with format (textSize,textColorR,textColorG,textColorB,style)
+         */
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.filePath))) {
             bw.write("textSize,textColorR,textColorG,textColorB,style\n");
             bw.write(String.format("%d,%d,%d,%d,%s\n",
@@ -85,8 +98,10 @@ public class SettingClass {
         }
     }
 
-    //Default value with no Setting.csv found
     private void setDefaultSettings() {
+        /**
+         * set the SettingClass to a specific default value
+         */
         this.textSize = 13;
         this.textColor = new Color(100, 50, 200);
         this.style = "Arial";
@@ -105,7 +120,7 @@ public class SettingClass {
     public Font getTextStyle() {
         return this.textStyle;
     }
-
+    // all setter updates settings.csv
     public void setColor(Color color) {
         this.textColor = color;
         saveSettingsToCSV();
