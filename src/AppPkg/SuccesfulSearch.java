@@ -36,7 +36,7 @@ public class SuccesfulSearch extends javax.swing.JFrame
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        btnAddFavorite.setText("Add favorite");
+        btnAddFavorite.setText("Favorite");
 
         btnGenerateTraingCard.setText("Generate Trading Card");
         btnGenerateTraingCard.addActionListener(new java.awt.event.ActionListener()
