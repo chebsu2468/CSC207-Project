@@ -121,6 +121,7 @@ public class SettingClass {
         return this.textStyle;
     }
     // all setter updates settings.csv
+
     public void setColor(Color color) {
         this.textColor = color;
         saveSettingsToCSV();
