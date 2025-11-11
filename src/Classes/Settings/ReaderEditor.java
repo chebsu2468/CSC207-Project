@@ -3,14 +3,14 @@ import java.awt.Font;
 import java.awt.Color;
 
 public class ReaderEditor {
-    private SettingClass configuration;
+    private TextSetting configuration;
 
     public ReaderEditor(String filePath) {
-        this.configuration = new SettingClass(filePath);
+        this.configuration = new TextSetting(filePath);
     }
 //??
     public ReaderEditor() {
-        this.configuration = new SettingClass();
+        this.configuration = new TextSetting();
     }
 
     public void editSettings(String color, int size, String style) {
@@ -26,7 +26,7 @@ public class ReaderEditor {
         }
 
         if (size == 1){
-            configuration.setSize(11);
+            configuration.setSize(12);
         }else if (size == 2){
             configuration.setSize(13);
         }else if (size == 4){
@@ -34,14 +34,14 @@ public class ReaderEditor {
         }else if (size == 5){
             configuration.setSize(17);
         }else {
-            configuration.setSize(12);
+            configuration.setSize(14);
         }
 
-        if (style.equals("tnr")){
+        if (style.equals("Times New Roman")){
             configuration.setStyle("Times New Roman");
-        }else if ((style.equals("dsg"))){
-            configuration.setStyle("Droid Sans Georgian");
-        }else if (style.equals("dvs")){
+        }else if ((style.equals("Serif"))){
+            configuration.setStyle("Serif");
+        }else if (style.equals("DejaVu Sans")){
             configuration.setStyle("DejaVu Sans");
         }else{
             configuration.setStyle("Arial");

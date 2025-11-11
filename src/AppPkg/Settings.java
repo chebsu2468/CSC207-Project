@@ -3,20 +3,23 @@ import Classes.Settings.ReaderEditor;
 
 public class Settings extends javax.swing.JFrame
 {
+    private ReaderEditor config  = new ReaderEditor();
+    private String color = "blue";
+    private String style = "Arial";
+    private int size = 3;
 
     public Settings()
     {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setupListeners();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
-        ReaderEditor config  = new ReaderEditor();
-
-
+        config.editSettings(color, size, style);
         lblFontSize = new javax.swing.JLabel();
         lblFontSize.setForeground(config.getColor());
         lblFontSize.setFont(config.getStyle());
@@ -43,7 +46,7 @@ public class Settings extends javax.swing.JFrame
 
         lblColor.setText("Color");
 
-        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arial", "purple", "blue", "green", "black" }));
+        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "purple", "blue", "green", "black" }));
 
         btnSave.setText("Save");
 
@@ -119,6 +122,34 @@ public class Settings extends javax.swing.JFrame
         // new MainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void setupListeners() {
+        // Font size combo box
+        cBoxFontSizes.addActionListener(e -> {
+            size = Integer.parseInt((String) cBoxFontSizes.getSelectedItem());
+            updateLabelStyle();
+        });
+
+        // Font style combo box
+        cBoxFonts.addActionListener(e -> {
+            style = (String) cBoxFonts.getSelectedItem();
+            updateLabelStyle();
+        });
+
+        // Color combo box
+        cBoxColor.addActionListener(e -> {
+            color = (String) cBoxColor.getSelectedItem();
+            updateLabelStyle();
+        });
+    }
+
+    private void updateLabelStyle() {
+        config.editSettings(color, size, style);
+        lblFontSize.setForeground(config.getColor());
+        lblFontSize.setFont(config.getStyle());
+    }
+
+
 
     public static void main(String args[])
     {
