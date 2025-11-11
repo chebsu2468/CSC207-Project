@@ -1,55 +1,60 @@
 package AppPkg;
+
 import Classes.Settings.ReaderEditor;
 
-public class Settings extends javax.swing.JFrame
-{
-    private ReaderEditor config  = new ReaderEditor();
-    private String color = "blue";
-    private String style = "Arial";
-    private int size = 3;
+import java.awt.*;
 
-    public Settings()
-    {
+public class Settings extends javax.swing.JFrame {
+    private ReaderEditor config = new ReaderEditor();
+    private String color = "black";
+    private String style = "Arial";
+    private int size = 2;
+
+    public Settings() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setupListeners();
+        revalidate();
+        pack();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
+        Color fg = config.getColor();
+        Font font = config.getStyle();
+
         lblFontSize = new javax.swing.JLabel();
-        lblFontSize.setForeground(config.getColor());
-        lblFontSize.setFont(config.getStyle());
+        lblFontSize.setForeground(fg);
+        lblFontSize.setFont(font);
 
         cBoxFontSizes = new javax.swing.JComboBox<>();
-        cBoxFontSizes.setForeground(config.getColor());
-        cBoxFontSizes.setFont(config.getStyle());
+        cBoxFontSizes.setForeground(fg);
+        cBoxFontSizes.setFont(font);
 
         lblFont = new javax.swing.JLabel();
-        lblFont.setForeground(config.getColor());
-        lblFont.setFont(config.getStyle());
+        lblFont.setForeground(fg);
+        lblFont.setFont(font);
 
         cBoxFonts = new javax.swing.JComboBox<>();
-        cBoxFonts.setForeground(config.getColor());
-        cBoxFonts.setFont(config.getStyle());
+        cBoxFonts.setForeground(fg);
+        cBoxFonts.setFont(font);
 
         lblColor = new javax.swing.JLabel();
-        lblColor.setForeground(config.getColor());
-        lblColor.setFont(config.getStyle());
+        lblColor.setForeground(fg);
+        lblColor.setFont(font);
 
         cBoxColor = new javax.swing.JComboBox<>();
-        cBoxColor.setForeground(config.getColor());
-        cBoxColor.setFont(config.getStyle());
+        cBoxColor.setForeground(fg);
+        cBoxColor.setFont(font);
 
         btnSave = new javax.swing.JButton();
-        btnSave.setForeground(config.getColor());
-        btnSave.setFont(config.getStyle());
+        btnSave.setForeground(fg);
+        btnSave.setFont(font);
 
         btnDefault = new javax.swing.JButton();
-        btnDefault.setForeground(config.getColor());
-        btnDefault.setFont(config.getStyle());
+        btnDefault.setForeground(fg);
+        btnDefault.setFont(font);
 
         btnHome = new javax.swing.JButton();
 
@@ -58,25 +63,23 @@ public class Settings extends javax.swing.JFrame
 
         lblFontSize.setText("Font Size");
 
-        cBoxFontSizes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+        cBoxFontSizes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", "4", "5"}));
 
         lblFont.setText("Font");
 
-        cBoxFonts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Times New Roman", "Droid Sans Georgian", "DejaVu Sans", "Arial" }));
+        cBoxFonts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Arial", "Times New Roman", "Droid Sans Georgian", "DejaVu Sans"}));
 
         lblColor.setText("Color");
 
-        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "purple", "blue", "green", "black" }));
+        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"black", "blue", "green", "purple"}));
 
         btnSave.setText("Save");
 
         btnDefault.setText("Restore Defaults");
 
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPkg/home.png"))); // NOI18N
-        btnHome.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomeActionPerformed(evt);
             }
         });
@@ -84,53 +87,53 @@ public class Settings extends javax.swing.JFrame
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFontSize)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cBoxFontSizes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFont)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cBoxFonts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblColor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cBoxColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDefault))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnHome)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblFontSize)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(cBoxFontSizes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblFont)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(cBoxFonts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblColor)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(cBoxColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnSave)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnDefault))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(btnHome)))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFontSize)
-                    .addComponent(cBoxFontSizes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFont)
-                    .addComponent(cBoxFonts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblColor)
-                    .addComponent(cBoxColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave)
-                    .addComponent(btnDefault))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(btnHome)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblFontSize)
+                                        .addComponent(cBoxFontSizes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblFont)
+                                        .addComponent(cBoxFonts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblColor)
+                                        .addComponent(cBoxColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnSave)
+                                        .addComponent(btnDefault))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                                .addComponent(btnHome)
+                                .addContainerGap())
         );
 
         pack();
@@ -159,11 +162,10 @@ public class Settings extends javax.swing.JFrame
             color = (String) cBoxColor.getSelectedItem();
 
 
-
         });
 
 
-        btnDefault.addActionListener( e -> {
+        btnDefault.addActionListener(e -> {
             size = 2;
             style = "Aerial";
             color = "black";
@@ -178,37 +180,48 @@ public class Settings extends javax.swing.JFrame
 
     private void updateLabelStyle() {
         config.editSettings(color, size, style);
+        Color fg = config.getColor();
+        Font font = config.getStyle();
 
-        lblFontSize.setForeground(config.getColor());
-        lblFontSize.setFont(config.getStyle());
+        lblFontSize.setForeground(fg);
+        lblFontSize.setFont(font);
 
-        cBoxFontSizes.setForeground(config.getColor());
-        cBoxFontSizes.setFont(config.getStyle());
+        cBoxFontSizes.setForeground(fg);
+        cBoxFontSizes.setFont(font);
 
-        lblFont.setForeground(config.getColor());
-        lblFont.setFont(config.getStyle());
+        lblFont.setForeground(fg);
+        lblFont.setFont(font);
 
-        cBoxFonts.setForeground(config.getColor());
-        cBoxFonts.setFont(config.getStyle());
+        cBoxFonts.setForeground(fg);
+        cBoxFonts.setFont(font);
 
-        lblColor.setForeground(config.getColor());
-        lblColor.setFont(config.getStyle());
+        lblColor.setForeground(fg);
+        lblColor.setFont(font);
 
-        cBoxColor.setForeground(config.getColor());
-        cBoxColor.setFont(config.getStyle());
+        cBoxColor.setForeground(fg);
+        cBoxColor.setFont(font);
 
-        btnSave.setForeground(config.getColor());
-        btnSave.setFont(config.getStyle());
+        btnSave.setForeground(fg);
+        btnSave.setFont(font);
 
-        btnDefault.setForeground(config.getColor());
-        btnDefault.setFont(config.getStyle());
+        btnDefault.setForeground(fg);
+        btnDefault.setFont(font);
+
+        // Automatically resize window to fit updated font sizes
+        revalidate();
+        pack();
 
     }
 
+    private void rebuildUI() {
+        getContentPane().removeAll(); // remove everything
+        initComponents();             // recreate components
+        revalidate();                 // re-layout everything
+        repaint();                    // redraw
+    }
 
 
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         new Settings().setVisible(true);
     }
 
