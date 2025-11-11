@@ -19,18 +19,38 @@ public class Settings extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
-        config.editSettings(color, size, style);
         lblFontSize = new javax.swing.JLabel();
         lblFontSize.setForeground(config.getColor());
         lblFontSize.setFont(config.getStyle());
 
         cBoxFontSizes = new javax.swing.JComboBox<>();
+        cBoxFontSizes.setForeground(config.getColor());
+        cBoxFontSizes.setFont(config.getStyle());
+
         lblFont = new javax.swing.JLabel();
+        lblFont.setForeground(config.getColor());
+        lblFont.setFont(config.getStyle());
+
         cBoxFonts = new javax.swing.JComboBox<>();
+        cBoxFonts.setForeground(config.getColor());
+        cBoxFonts.setFont(config.getStyle());
+
         lblColor = new javax.swing.JLabel();
+        lblColor.setForeground(config.getColor());
+        lblColor.setFont(config.getStyle());
+
         cBoxColor = new javax.swing.JComboBox<>();
+        cBoxColor.setForeground(config.getColor());
+        cBoxColor.setFont(config.getStyle());
+
         btnSave = new javax.swing.JButton();
+        btnSave.setForeground(config.getColor());
+        btnSave.setFont(config.getStyle());
+
         btnDefault = new javax.swing.JButton();
+        btnDefault.setForeground(config.getColor());
+        btnDefault.setFont(config.getStyle());
+
         btnHome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -127,26 +147,62 @@ public class Settings extends javax.swing.JFrame
         // Font size combo box
         cBoxFontSizes.addActionListener(e -> {
             size = Integer.parseInt((String) cBoxFontSizes.getSelectedItem());
-            updateLabelStyle();
         });
 
         // Font style combo box
         cBoxFonts.addActionListener(e -> {
             style = (String) cBoxFonts.getSelectedItem();
-            updateLabelStyle();
         });
 
         // Color combo box
         cBoxColor.addActionListener(e -> {
             color = (String) cBoxColor.getSelectedItem();
+
+
+
+        });
+
+
+        btnDefault.addActionListener( e -> {
+            size = 2;
+            style = "Aerial";
+            color = "black";
+            updateLabelStyle();
+
+        });
+
+        btnSave.addActionListener(e -> {
             updateLabelStyle();
         });
     }
 
     private void updateLabelStyle() {
         config.editSettings(color, size, style);
+
         lblFontSize.setForeground(config.getColor());
         lblFontSize.setFont(config.getStyle());
+
+        cBoxFontSizes.setForeground(config.getColor());
+        cBoxFontSizes.setFont(config.getStyle());
+
+        lblFont.setForeground(config.getColor());
+        lblFont.setFont(config.getStyle());
+
+        cBoxFonts.setForeground(config.getColor());
+        cBoxFonts.setFont(config.getStyle());
+
+        lblColor.setForeground(config.getColor());
+        lblColor.setFont(config.getStyle());
+
+        cBoxColor.setForeground(config.getColor());
+        cBoxColor.setFont(config.getStyle());
+
+        btnSave.setForeground(config.getColor());
+        btnSave.setFont(config.getStyle());
+
+        btnDefault.setForeground(config.getColor());
+        btnDefault.setFont(config.getStyle());
+
     }
 
 
