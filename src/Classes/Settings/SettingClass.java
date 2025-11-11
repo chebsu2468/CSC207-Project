@@ -1,4 +1,4 @@
-package Classes;
+package Classes.Settings;
 
 import java.awt.Color;
 import java.awt.Font;

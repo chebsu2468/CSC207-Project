@@ -1,5 +1,5 @@
 package AppPkg;
-import Classes.SettingClass;
+import Classes.Settings.ReaderEditor;
 
 public class Settings extends javax.swing.JFrame
 {
@@ -14,12 +14,12 @@ public class Settings extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
-        SettingClass config  = new SettingClass();
+        ReaderEditor config  = new ReaderEditor();
 
 
         lblFontSize = new javax.swing.JLabel();
-        lblFontSize.setForeground(config.getTextColor());
-        lblFontSize.setFont(config.getTextStyle());
+        lblFontSize.setForeground(config.getColor());
+        lblFontSize.setFont(config.getStyle());
 
         cBoxFontSizes = new javax.swing.JComboBox<>();
         lblFont = new javax.swing.JLabel();
@@ -39,11 +39,11 @@ public class Settings extends javax.swing.JFrame
 
         lblFont.setText("Font");
 
-        cBoxFonts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cBoxFonts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Times New Roman", "Droid Sans Georgian", "DejaVu Sans", "Arial" }));
 
         lblColor.setText("Color");
 
-        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arial", "purple", "blue", "green", "black" }));
 
         btnSave.setText("Save");
 
