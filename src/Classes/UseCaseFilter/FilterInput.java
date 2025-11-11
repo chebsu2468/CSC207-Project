@@ -20,7 +20,7 @@ public class FilterInput {
                 double max_speed, double min_lifespan, double max_lifespan, double min_weight, double max_weight){
         this.animal_groups = animal_groups;
         this.animal_diets = animal_diets;
-        this.
+        //this.
     }
 
     //getters
