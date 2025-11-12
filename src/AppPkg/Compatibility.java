@@ -162,13 +162,13 @@ public class Compatibility extends javax.swing.JFrame
         String choiceOne = txfAnimal1.getText();
         APIClass api = new APIClass();
         String animal1Data = api.getAnimalData(choiceOne);
-        Animal animalOne = new Animal(animal1Data);
+        //Animal animalOne = new Animal();
 
         String choiceTwo = txfAnimal2.getText();
         String animal2Data = api.getAnimalData(choiceTwo);
-        Animal animalTwo = new Animal(animal2Data);
+        //Animal animalTwo = new Animal();
 
-        HashSet<String> similar = getSimilar(animalOne, animalTwo);
+        //ArrayList<String> similar = getSimilar(animalOne, animalTwo);
 
         String similarString = String.join(", ", similar);
         txaMatching.setText(similarString);
