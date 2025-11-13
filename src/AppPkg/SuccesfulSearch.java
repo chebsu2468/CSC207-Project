@@ -1,12 +1,22 @@
 package AppPkg;
 
+import Classes.Animal;
+
 public class SuccesfulSearch extends javax.swing.JFrame
 {
 
-    public SuccesfulSearch(String animal)
+    public SuccesfulSearch(Animal animal)
     {
         initComponents();
-        lblHeading.setText("Searched: " + Character.toUpperCase(animal.charAt(0)) + animal.substring(1));
+        String name = animal.getName();
+        lblHeading.setText("Searched: " + Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        jTextArea1.setText(animal.toString());
+    }
+
+    public SuccesfulSearch()
+    {
+        initComponents();
+        lblHeading.setText("Searched: ");
     }
 
     /**
@@ -43,7 +53,7 @@ public class SuccesfulSearch extends javax.swing.JFrame
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnGenerateTraingCardActionPerformed(evt);
+                btnGenerateTradingCardActionPerformed(evt);
             }
         });
 
@@ -103,9 +113,9 @@ public class SuccesfulSearch extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
-    private void btnGenerateTraingCardActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGenerateTraingCardActionPerformed
+    private void btnGenerateTradingCardActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGenerateTraingCardActionPerformed
     {//GEN-HEADEREND:event_btnGenerateTraingCardActionPerformed
-        new Settings().setVisible(true);
+        new GenerateTradingCard().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGenerateTraingCardActionPerformed
 
@@ -114,7 +124,7 @@ public class SuccesfulSearch extends javax.swing.JFrame
      */
     public static void main(String args[])
     {
-        new SuccesfulSearch("").setVisible(true);
+        new SuccesfulSearch().setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
