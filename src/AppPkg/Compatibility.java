@@ -180,23 +180,29 @@ public class Compatibility extends javax.swing.JFrame
 
     private void btnCompareActionPerformed(java.awt.event.ActionEvent evt)
     {
-        String choiceOne = txfAnimal1.getText();
+       String choiceOne = txfAnimal1.getText();
         APIClass api = new APIClass();
         String animal1Data = api.getAnimalData(choiceOne);
-        //Animal animalOne = new Animal();
+        Animal animalOne = new Animal(animal1Data);
 
         String choiceTwo = txfAnimal2.getText();
         String animal2Data = api.getAnimalData(choiceTwo);
-        //Animal animalTwo = new Animal();
+        Animal animalTwo = new Animal(animal2Data);
 
-        //ArrayList<String> similar = getSimilar(animalOne, animalTwo);
-
-        //This below line is just a placeholder for now
-        String similar = "";
-
+        HashSet<String> similar = getSimilar(animalOne, animalTwo);
         String similarString = String.join(", ", similar);
+
+        HashSet<String> conflicting = new HashSet<>();
+        String[] expected = {"Group", "Diet", "Lifestyle", "Location", "Prey", "Habitat", "Lifespan", "Height", "Weight"};
+        for (String s : expected) {
+            if (!similar.contains(s)) {
+                conflicting.add(s);
+            }
+        }
+        String conflictingString = String.join(", ", conflicting);
+
         txaMatching.setText(similarString);
-        txaConflicting.setText("Goodbye");
+        txaConflicting.setText(conflictingString);
     }
 
     public static HashSet<String> getSimilar(Animal animal1, Animal animal2){
