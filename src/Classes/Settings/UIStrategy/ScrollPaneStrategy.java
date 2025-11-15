@@ -1,8 +1,9 @@
-package Classes.Settings;
+package Classes.Settings.UIStrategy;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class ScrollPaneStrategy implements UIStyleStrategy{
+public class ScrollPaneStrategy implements UIStyleStrategy {
     public void apply(Component comp, Color c, Font font) {
 
         JScrollPane sp = (JScrollPane) comp;

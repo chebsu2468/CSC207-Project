@@ -1,14 +1,16 @@
-package Classes.Settings;
+package Classes.Settings.UIStrategy;
 
 import javax.swing.*;
 import java.util.*;
 
 public class StrategyMap {
     private final Map<Class<?>, UIStyleStrategy> strategies = new HashMap<>();
+    private final UIStyleStrategy defaultStrategy = new DefaultUIStrategy();
 
     //maps the strategy for different UI component with strategy interface
     public StrategyMap() {
         strategies.put(JScrollPane.class, new ScrollPaneStrategy());
+        //add more if needed
     }
 
     public UIStyleStrategy getStrategy(Class<?> compClass) {
@@ -16,7 +18,7 @@ public class StrategyMap {
         if (s != null) {
             return s;
         } else {
-            return new DefaultUIStrategy();
+            return defaultStrategy;
         }
 
     }
