@@ -1,5 +1,7 @@
 package AppPkg;
 
+import Classes.Animal;
+import Classes.APIClass;
 import Classes.add_favorite.AddFavoriteOutputData;
 import Classes.add_favorite.FavoriteList;
 import Classes.add_favorite.FileFavoritesDataAccessObject;
@@ -49,6 +51,10 @@ public class Favorites extends javax.swing.JFrame
         });
         jScrollPane1.setViewportView(jListFavs);
 
+        jListFavs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {btnMouseClickActionPerformed(evt);}
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,6 +90,22 @@ public class Favorites extends javax.swing.JFrame
         new MainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
+
+    /**
+     * User double-click on the name to get the information.
+     */
+    private void btnMouseClickActionPerformed(java.awt.event.MouseEvent evt) {
+        if (evt.getClickCount() == 2) {
+            String animalName = jListFavs.getSelectedValue().toLowerCase().trim();
+            if (animalName.contains(" ")) {
+                animalName = animalName.replace(" ", "%20");
+            }
+            APIClass apiClass = new APIClass();
+            Animal animal = new Animal(apiClass.getAnimalData(animalName));
+            new SuccesfulSearch(animal).setVisible(true);
+            this.dispose();
+        }
+    }
 
     public static void main(String args[])
     {
