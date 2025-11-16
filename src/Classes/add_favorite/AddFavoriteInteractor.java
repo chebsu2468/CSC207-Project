@@ -11,10 +11,19 @@ public class AddFavoriteInteractor implements AddFavoriteInputBoundary{
     }
 
     @Override
+    /**
+     * Add name to a favorite list.
+     */
     public void execute(AddFavoriteInputData addFavoriteInputData) {
         final String name = addFavoriteInputData.getName();
-        final FavoriteList favorites = addFavoriteDataAccessObject.getFavoriteList();
         addFavoriteDataAccessObject.addFavorite(name);
-        favorites.addFavorite(name);
+    }
+
+    /**
+     * Remove name from a favorite list.
+     */
+    public void execute1(AddFavoriteInputData addFavoriteInputData) {
+        final String name = addFavoriteInputData.getName();
+        addFavoriteDataAccessObject.removeFavorite(name);
     }
 }

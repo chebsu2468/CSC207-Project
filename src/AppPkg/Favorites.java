@@ -2,9 +2,9 @@ package AppPkg;
 
 import Classes.Animal;
 import Classes.APIClass;
-import Classes.add_favorite.AddFavoriteOutputData;
-import Classes.add_favorite.FavoriteList;
-import Classes.add_favorite.FileFavoritesDataAccessObject;
+import Classes.add_favorite.*;
+
+import javax.swing.*;
 
 public class Favorites extends javax.swing.JFrame
 {
@@ -20,6 +20,7 @@ public class Favorites extends javax.swing.JFrame
     {
 
         btnReturn = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
         lblHeading = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListFavs = new javax.swing.JList<>();
@@ -37,6 +38,11 @@ public class Favorites extends javax.swing.JFrame
             {
                 btnReturnActionPerformed(evt);
             }
+        });
+
+        btnRemove.setText("Remove");
+        btnRemove.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt) {btnRemoveActionPerformed(evt);}
         });
 
         lblHeading.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -63,8 +69,11 @@ public class Favorites extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnReturn))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRemove)
+                        .addGap(18, 18, 18)
                     .addComponent(lblHeading, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addContainerGap())
@@ -77,7 +86,9 @@ public class Favorites extends javax.swing.JFrame
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnReturn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnReturn)
+                        .addComponent(btnRemove))
                 .addContainerGap())
         );
 
@@ -107,6 +118,22 @@ public class Favorites extends javax.swing.JFrame
         }
     }
 
+    /**
+     * User clicks on the name first, then clicks remove to remove the name.
+     */
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {
+        final AddFavoriteInputBoundary addFavoriteInteractor = new AddFavoriteInteractor(favoritesDataAccessObject);
+        AddFavoriteController addFavoriteController = new AddFavoriteController(addFavoriteInteractor);
+        String animalName = jListFavs.getSelectedValue();
+        if (animalName == null) {
+            JOptionPane.showMessageDialog(null, "Select a name to remove");
+            return;
+        }
+        addFavoriteController.execute1(animalName);
+        new Favorites().setVisible(true);
+        this.dispose();
+    }
+
     public static void main(String args[])
     {
         new Favorites().setVisible(true);
@@ -117,5 +144,8 @@ public class Favorites extends javax.swing.JFrame
     private javax.swing.JList<String> jListFavs;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblHeading;
+    private javax.swing.JButton btnRemove;
+    final FileFavoritesDataAccessObject favoritesDataAccessObject
+            = new FileFavoritesDataAccessObject("favorites.csv");
     // End of variables declaration//GEN-END:variables
 }

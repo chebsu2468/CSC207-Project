@@ -10,4 +10,6 @@ public interface AddFavoriteDataAccessInterface {
     FavoriteList getFavoriteList();
 
     void addFavorite(String name);
+
+    void removeFavorite(String name);
 }

@@ -5,4 +5,6 @@ package Classes.add_favorite;
  */
 public interface AddFavoriteInputBoundary {
     void execute(AddFavoriteInputData addFavoriteInputData);
+
+    void execute1(AddFavoriteInputData addFavoriteInputData);
 }

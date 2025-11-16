@@ -14,4 +14,9 @@ public class AddFavoriteController {
         final AddFavoriteInputData addFavoriteInputData = new AddFavoriteInputData(name);
         addFavoriteInteractor.execute(addFavoriteInputData);
     }
+
+    public void execute1(String name) {
+        final AddFavoriteInputData addFavoriteInputData = new AddFavoriteInputData(name);
+        addFavoriteInteractor.execute1(addFavoriteInputData);
+    }
 }

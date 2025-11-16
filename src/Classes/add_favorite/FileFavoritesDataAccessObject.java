@@ -51,4 +51,9 @@ public class FileFavoritesDataAccessObject implements AddFavoriteDataAccessInter
         favorites.addFavorite(name);
         save();
     }
+
+    public void removeFavorite(String name) {
+        favorites.removeFavorite(name);
+        save();
+    }
 }
