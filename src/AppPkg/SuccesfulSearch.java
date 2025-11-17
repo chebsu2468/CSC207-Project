@@ -14,11 +14,13 @@ public class SuccesfulSearch extends javax.swing.JFrame
 {
     private ReaderEditor config = new ReaderEditor("settings.csv");
     private final StyleUpdater styleUpdater = new StyleUpdater(config);
+    private Animal animal;
 
     public SuccesfulSearch(Animal animal)
     {
         initComponents();
         animalName = animal.getName();
+        this.animal = animal;
         lblHeading.setText("Searched: " + Character.toUpperCase(animalName.charAt(0)) + animalName.substring(1));
         jTextArea1.setText(animal.toString());
         updateLabelStyle();
@@ -64,12 +66,9 @@ public class SuccesfulSearch extends javax.swing.JFrame
         });
 
         btnGenerateTradingCard.setText("Generate Trading Card");
-        btnGenerateTradingCard.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                btnGenerateTradingCardActionPerformed(evt);
-            }
+        btnGenerateTradingCard.addActionListener(evt -> {
+            new GenerateTradingCard(animal, this).setVisible(true);
+            this.setVisible(false);
         });
 
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPkg/home.png"))); // NOI18N
@@ -127,12 +126,6 @@ public class SuccesfulSearch extends javax.swing.JFrame
         new MainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void btnGenerateTradingCardActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGenerateTraingCardActionPerformed
-    {//GEN-HEADEREND:event_btnGenerateTraingCardActionPerformed
-        new GenerateTradingCard().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnGenerateTraingCardActionPerformed
 
     private void btnAddFavoriteActionPerformed(java.awt.event.ActionEvent evt) {
         final AddFavoriteInputBoundary addFavoriteInteractor = new AddFavoriteInteractor(favoritesDataAccessObject);
