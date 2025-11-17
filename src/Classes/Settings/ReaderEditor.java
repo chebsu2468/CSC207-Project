@@ -55,4 +55,8 @@ public class ReaderEditor {
         return this.configuration.getTextSize();
     }
 
+    public String getStyleName() {
+        return this.configuration.getFontName();
+    }
+
 }
