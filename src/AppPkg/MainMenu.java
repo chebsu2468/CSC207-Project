@@ -40,7 +40,7 @@ public class  MainMenu extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Main Menu");
 
-        lblGreeting1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        lblGreeting1.setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 48)); // NOI18N
         lblGreeting1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblGreeting1.setText("Hello User");
 
@@ -131,8 +131,8 @@ public class  MainMenu extends javax.swing.JFrame
             .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblGreeting2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152))
+                .addComponent(lblGreeting2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(251, 251, 251)
                 .addComponent(btnSearch)
