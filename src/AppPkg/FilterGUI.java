@@ -1,10 +1,10 @@
 /**
  * FilterGUI: contains logic for the category selectors and range sliders
- *  also remember you OR within a category and AND across them
- *  (any group) AND (any location) AND (.....) ₍^ >⩊< ^₎Ⳋ
- /)/)
- ( . .)
- ( づ♡
+ * also remember you OR within a category and AND across them
+ * (any group) AND (any location) AND (.....) ₍^ >⩊< ^₎Ⳋ
+ * /)/)
+ * ( . .)
+ * ( づ♡
  */
 package AppPkg;
 
@@ -48,6 +48,7 @@ public class FilterGUI extends JDialog {
         selectedTags = new ArrayList<>();
         initComponents();
         setLocationRelativeTo(parent);
+        //
         this.styleUpdater.updateALL(this);
     }
 
@@ -249,7 +250,8 @@ public class FilterGUI extends JDialog {
         for (Component comp : components) {
             if (comp instanceof JPanel) {
                 for (Component inner : ((JPanel) comp).getComponents()) {
-                    if (inner instanceof JCheckBox) ((JCheckBox) inner).setSelected(false);
+                    if (inner instanceof JCheckBox)
+                        ((JCheckBox) inner).setSelected(false);
                 }
             }
         }
