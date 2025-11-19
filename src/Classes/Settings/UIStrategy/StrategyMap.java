@@ -10,6 +10,7 @@ public class StrategyMap {
     //maps the strategy for different UI component with strategy interface
     public StrategyMap() {
         strategies.put(JScrollPane.class, new ScrollPaneStrategy());
+        strategies.put(JPanel.class, new JPanelStrategy());
         //add more if needed
     }
 
