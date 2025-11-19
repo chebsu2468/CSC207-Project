@@ -99,6 +99,10 @@ public class Animal {
                 + "Scientific Name: " + scientificName;
     }
 
+    public String getScientificName() {
+        return taxonomy.getOrDefault("scientific_name", "Unknown");
+    }
+
     public void setTaxonomy(java.util.Map<String, String> taxonomy) {
         this.taxonomy = taxonomy;
     }
