@@ -1,12 +1,12 @@
 package Classes.Settings;
 import java.awt.*;
 
-public class TextSettingInputData {
+public class TextSettingInteractor {
     private TextSetting configuration;
     final private TextSettingDataAccess settingFetcher;
     final private String filePath;
 
-    public TextSettingInputData(String filePath) {
+    public TextSettingInteractor(String filePath) {
         this.filePath = filePath;
         this.settingFetcher = new TextSettingDataAccess(filePath);
         this.configuration = settingFetcher.load();

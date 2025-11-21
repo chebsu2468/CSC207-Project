@@ -14,9 +14,9 @@ public class TextSettingUseCaseTest {
     @Test
     void testMainFlow_TextSettingsToFrame() {
 
-        TextSettingCSV saves = new TextSettingCSV("TestSettings.csv");
-        ReaderEditor config = new ReaderEditor("TestSettings.csv");
-        StyleUpdater updater = new StyleUpdater(config);
+        TextSettingDataAccess saves = new TextSettingDataAccess("TestSettings.csv");
+        TextSettingInteractor config = new TextSettingInteractor("TestSettings.csv");
+        TextSettingOutput updater = new TextSettingOutput(config);
         String[] fonts = (new FontFetcher()).getFonts();
 
 
