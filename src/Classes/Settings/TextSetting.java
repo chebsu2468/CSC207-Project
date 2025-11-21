@@ -3,7 +3,7 @@ package Classes.Settings;
 import java.awt.Color;
 import java.awt.Font;
 
-public class TextSetting extends ViewModel {
+public class TextSetting extends Settings {
     private int textSize;
     private Color textColor;
     private String fontName;
