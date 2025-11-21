@@ -7,10 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StyleUpdater {
-    private final ReaderEditor config;
+    private final TextSettingInputData config;
     private StrategyMap strategies;
 
-    public StyleUpdater(ReaderEditor config) {
+    public StyleUpdater(TextSettingInputData config) {
         this.config = config;
         this.strategies = new StrategyMap();
     }

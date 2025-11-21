@@ -1,14 +1,14 @@
 package Classes.Settings;
 import java.awt.*;
 
-public class ReaderEditor {
+public class TextSettingInputData {
     private TextSetting configuration;
-    final private TextSettingCSV settingFetcher;
+    final private TextSettingDataAccess settingFetcher;
     final private String filePath;
 
-    public ReaderEditor(String filePath) {
+    public TextSettingInputData(String filePath) {
         this.filePath = filePath;
-        this.settingFetcher = new TextSettingCSV(filePath);
+        this.settingFetcher = new TextSettingDataAccess(filePath);
         this.configuration = settingFetcher.load();
     }
 
