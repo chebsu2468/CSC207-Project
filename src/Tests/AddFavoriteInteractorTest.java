@@ -10,4 +10,6 @@ public class AddFavoriteInteractorTest {
     public void successTest() {
         AddFavoriteInputData inputData = new AddFavoriteInputData("Cheetah");
     }
+    @Test
+    public void failTest() {}
 }
