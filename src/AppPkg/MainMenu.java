@@ -191,7 +191,7 @@ public class  MainMenu extends javax.swing.JFrame
             if (result == null) {
 //                lblError.setText("Animal '" + animalName + "' not found. Please double check the name.");
 //                return; // Exit early
-                AnimalNamesProvider nameProvider = new AnimalNamesProvider("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");
+                AnimalNamesProvider nameProvider = new AnimalNamesProvider("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");
                 String suggestion = nameProvider.fuzzySuggestion(animalName);
 
                 if (suggestion != null && !suggestion.isEmpty()) {
@@ -254,14 +254,6 @@ public class  MainMenu extends javax.swing.JFrame
         FilterGUI filterFrame = FilterGUIFactory.create(this);
         filterFrame.setLocation(this.getX() + this.getWidth(), this.getY());
         filterFrame.setVisible(true);
-//
-//
-//        //get MainMenu's co-ords
-//        int x = this.getX() + this.getWidth();
-//        int y = this.getY();
-//
-//        filterFrame.setLocation(x, y);  // set the location
-//        filterFrame.setVisible(true);   // make it visible
     }//GEN-LAST:event_btnFilterActionPerformed
 
     private void btnCompatibilityActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCompatibilityActionPerformed
