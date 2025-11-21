@@ -269,11 +269,11 @@ public class  MainMenu extends javax.swing.JFrame
 
     private void updateLabelStyle(){
         textSettingOutput.updateAll(this);
-//        lblGreeting1.setFont(new Font(
-//                config.getStyleName(),
-//                0,
-//                36
-//        ));
+        lblGreeting1.setFont(new Font(
+                config.getStyleName(),
+                0,
+                36
+        ));
     }
 
     public static void main(String args[])

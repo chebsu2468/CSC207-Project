@@ -25,8 +25,6 @@ public class Settings extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        Color fg = config.getColor();
-        Font font = config.getStyle();
 
         lblFontSize = new javax.swing.JLabel();
         cBoxFontSizes = new javax.swing.JComboBox<>();
@@ -139,7 +137,8 @@ public class Settings extends javax.swing.JFrame {
 
     private void updateLabelStyle() {
         //automatic StyleUpdater
-        textSettingOutput.updateChangesAll(color, size, style, this);
+        TextSettingRequest request = new TextSettingRequest(color, size, style);
+        textSettingOutput.updateChangesAll(request, this);
     }
 
     public static void main(String args[]) {

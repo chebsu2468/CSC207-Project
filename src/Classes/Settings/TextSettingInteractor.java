@@ -1,62 +1,58 @@
 package Classes.Settings;
 import java.awt.*;
 
-public class TextSettingInteractor {
+public class TextSettingInteractor implements TextSettingInputBoundary {
+
+    private final TextSettingDataAccess settingFetcher;
     private TextSetting configuration;
-    final private TextSettingDataAccess settingFetcher;
-    final private String filePath;
 
     public TextSettingInteractor(String filePath) {
-        this.filePath = filePath;
         this.settingFetcher = new TextSettingDataAccess(filePath);
         this.configuration = settingFetcher.load();
     }
 
-    public void editSettings(String color, int size, String style) {
+    @Override
+    public void editSettings(TextSettingRequest request) {
 
-        if (color.equals("purple")) {
-            configuration.setTextColor(new Color (70, 20, 124));
-        }else if (color.equals("blue")) {
-            configuration.setTextColor(new Color(0, 81, 161));
-        }else if (color.equals("green")){
-            configuration.setTextColor(new Color(28, 101, 3));
-        }else {
-            configuration.setTextColor(new Color(0, 0, 0));
+        // Color mapping
+        switch (request.color.toLowerCase()) {
+            case "purple" -> configuration.setTextColor(new Color(70, 20, 124));
+            case "blue" -> configuration.setTextColor(new Color(0, 81, 161));
+            case "green" -> configuration.setTextColor(new Color(28, 101, 3));
+            default -> configuration.setTextColor(Color.BLACK);
         }
 
-        if (size == 1){
-            configuration.setTextSize(13);
-        }else if (size == 2){
-            configuration.setTextSize(14);
-        }else if (size == 4){
-            configuration.setTextSize(16);
-        }else if (size == 5){
-            configuration.setTextSize(17);
-        }else {
-            configuration.setTextSize(15);
-        }
+        // Size mapping
+        int finalSize = switch (request.size) {
+            case 1 -> 13;
+            case 2 -> 14;
+            case 4 -> 16;
+            case 5 -> 17;
+            default -> 15;
+        };
+        configuration.setTextSize(finalSize);
 
-        configuration.setTextStyle(style);
+        // Style (font name)
+        configuration.setTextStyle(request.style);
 
-
+        // Save changes
         settingFetcher.save(configuration);
-
-    }// changes for changes
-
-    public Color getColor() {
-        return this.configuration.getTextColor();
     }
 
-    public Font getStyle() {
-        return this.configuration.getFont();
+    // Optional getters if needed by presenter or UI
+    public Color getColor() {
+        return configuration.getTextColor();
     }
 
     public int getSize() {
-        return this.configuration.getTextSize();
+        return configuration.getTextSize();
     }
 
     public String getStyleName() {
-        return this.configuration.getFontName();
+        return configuration.getFontName();
     }
 
+    public Font getStyle() {
+        return configuration.getFont();
+    }
 }
