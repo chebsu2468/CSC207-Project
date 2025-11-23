@@ -12,4 +12,6 @@ public interface AddFavoriteDataAccessInterface {
     void addFavorite(String name);
 
     void removeFavorite(String name);
+
+    boolean isFavorite(String name);
 }

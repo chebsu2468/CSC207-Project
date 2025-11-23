@@ -8,7 +8,7 @@ import java.io.*;
 public class FileFavoritesDataAccessObject implements AddFavoriteDataAccessInterface{
 
     private final File csvFile;
-    private FavoriteList favorites =  new FavoriteList();
+    private final FavoriteList favorites =  new FavoriteList();
 
     public FileFavoritesDataAccessObject(String csvpath) {
         csvFile = new File(csvpath);
@@ -48,12 +48,18 @@ public class FileFavoritesDataAccessObject implements AddFavoriteDataAccessInter
 
     @Override
     public void addFavorite(String name) {
-        favorites.addFavorite(name);
+        if (!isFavorite(name)) {
+            favorites.addFavorite(name);
+        }
         save();
     }
 
     public void removeFavorite(String name) {
         favorites.removeFavorite(name);
         save();
+    }
+
+    public boolean isFavorite(String name) {
+        return favorites.isFavorite(name);
     }
 }
