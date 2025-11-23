@@ -1,8 +1,5 @@
 /**
- * AnimalNameProviderI: Data Access Interface for the LLM
- /)/)
- ( . .)
- ( づ♡
+ * FilterRepositoryI: Data Access Interface for the LLM
  */
 package Classes.Filter;
 
@@ -21,7 +18,5 @@ public interface AnimalNamesProviderI {
         cursor and limit pagination fields are already coupled with the FilterInput
      */
     List<String> getCandidateNames (FilterInput input);
-    String fuzzySuggestion(String animalName);
-
 
 }

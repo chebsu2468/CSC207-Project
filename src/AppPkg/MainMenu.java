@@ -3,11 +3,14 @@ package AppPkg;
 import Classes.APIClass;
 import Classes.Animal;
 import Classes.Filter.AnimalNamesProvider;
+import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
+import Classes.Filter.FuzzySearch.FuzzySearchProvider;
 import Classes.Settings.TextSettingInteractor;
 import Classes.Settings.TextSettingOutput;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.swing.JOptionPane;
 import java.awt.*;
 
 public class  MainMenu extends javax.swing.JFrame
@@ -188,10 +191,10 @@ public class  MainMenu extends javax.swing.JFrame
 
             String result = aClass.getAnimalData(animalName);       // calls getAnimalData to get the JSON data of the animal
             if (result == null) {
-//                lblError.setText("Animal '" + animalName + "' not found. Please double check the name.");
-//                return; // Exit early
-                AnimalNamesProvider nameProvider = new AnimalNamesProvider("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");
-                String suggestion = nameProvider.fuzzySuggestion(animalName);
+
+                //fixed
+                FuzzySearchProvider fuzzy = new AnimalFuzzySearch();
+                String suggestion = fuzzy.getSuggestion(animalName);
 
                 if (suggestion != null && !suggestion.isEmpty()) {
                     String htmlText = "<html>Animal not found. Did you mean: <a href=''>" + suggestion + "</a>?</html>";
@@ -250,14 +253,9 @@ public class  MainMenu extends javax.swing.JFrame
 
     private void btnFilterActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnFilterActionPerformed
     {//GEN-HEADEREND:event_btnFilterActionPerformed
-        FilterGUI filterFrame = new FilterGUI(this);  // create the frame
-
-        //get MainMenu's co-ords
-        int x = this.getX() + this.getWidth();
-        int y = this.getY();
-
-        filterFrame.setLocation(x, y);  // set the location
-        filterFrame.setVisible(true);   // make it visible
+        FilterGUI filterFrame = FilterGUIFactory.create(this);
+        filterFrame.setLocation(this.getX() + this.getWidth(), this.getY());
+        filterFrame.setVisible(true);
     }//GEN-LAST:event_btnFilterActionPerformed
 
     private void btnCompatibilityActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCompatibilityActionPerformed
