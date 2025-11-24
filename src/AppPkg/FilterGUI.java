@@ -8,8 +8,8 @@ package AppPkg;
 import Classes.Filter.FilterController;
 import Classes.Filter.FilterViewModel;
 import Classes.Animal;
-import Classes.Settings.ReaderEditor;
-import Classes.Settings.StyleUpdater;
+import Classes.Settings.TextSettingInteractor;
+import Classes.Settings.TextSettingOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,8 +34,8 @@ public class FilterGUI extends JFrame {
     private JButton btnReset;
     private JButton btnClose;
 
-    private final ReaderEditor config = new ReaderEditor("settings.csv");
-    private final StyleUpdater styleUpdater = new StyleUpdater(config);
+    private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
+    private final TextSettingOutput TextSettingOutput = new TextSettingOutput(config);
 
     private List<String> selectedTags;
     private final FilterController filterController;
@@ -58,7 +58,7 @@ public class FilterGUI extends JFrame {
         initComponents();
         setupListeners();
         setLocationRelativeTo(parent);
-        styleUpdater.updateAll(this);
+        TextSettingOutput.updateAll(this);
     }
 
     private void initComponents() {
@@ -261,7 +261,7 @@ public class FilterGUI extends JFrame {
             showResultsList(animals);
         }
 
-        styleUpdater.updateAll(this);
+        TextSettingOutput.updateAll(this);
     }
 
     private void appendResultsFromViewModel() {
@@ -287,7 +287,7 @@ public class FilterGUI extends JFrame {
         btnLoadMore.setEnabled(filterViewModel.hasMore());
 
         System.out.println("Total animals now: " + model.getSize());
-        styleUpdater.updateAll(this);
+        TextSettingOutput.updateAll(this);
     }
 
     private void showNoResultsMessage() {
