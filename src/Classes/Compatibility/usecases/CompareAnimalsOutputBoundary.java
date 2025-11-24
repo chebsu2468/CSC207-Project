@@ -5,4 +5,6 @@ public interface CompareAnimalsOutputBoundary {
                         String matching, String conflicting, String rating);
     void presentAnimal1Error();
     void presentAnimal2Error();
+    void presentAnimal1Empty();
+    void presentAnimal2Empty();
 }

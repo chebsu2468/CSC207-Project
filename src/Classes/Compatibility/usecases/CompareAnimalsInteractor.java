@@ -20,14 +20,37 @@ public class CompareAnimalsInteractor implements CompareAnimalsInputBoundary {
 
     @Override
     public void execute(String animal1Name, String animal2Name) {
+        if (animal1Name.equals("") && animal2Name.equals("")) {
+            presenter.presentAnimal1Empty();
+            presenter.presentAnimal2Empty();
+            return;
+        }
+
+        if (animal1Name.equals("")){
+            presenter.presentAnimal1Empty();
+            return;
+        }
+
+        if (animal2Name.equals("")) {
+            presenter.presentAnimal2Empty();
+            return;
+        }
+
         // Fetch animals
         Animal animal1 = dataAccess.getAnimalByName(animal1Name);
+        Animal animal2 = dataAccess.getAnimalByName(animal2Name);
+
+        if (animal1 == null && animal2 == null) {
+            presenter.presentAnimal1Error();
+            presenter.presentAnimal2Error();
+            return;
+        }
+
         if (animal1 == null) {
             presenter.presentAnimal1Error();
             return;
         }
 
-        Animal animal2 = dataAccess.getAnimalByName(animal2Name);
         if (animal2 == null) {
             presenter.presentAnimal2Error();
             return;
