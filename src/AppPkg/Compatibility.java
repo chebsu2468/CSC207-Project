@@ -55,6 +55,22 @@ public class Compatibility extends javax.swing.JFrame
             txaConflicting.setText("");
             lblRating.setText("");
         }
+
+        @Override
+        public void presentAnimal1Empty() {
+            lblSearchedAnimal1.setText("Empty Animal 1");
+            txaMatching.setText("");
+            txaConflicting.setText("");
+            lblRating.setText("");
+        }
+
+        @Override
+        public void presentAnimal2Empty() {
+            lblSearchedAnimal2.setText("Empty Animal 2");
+            txaMatching.setText("");
+            txaConflicting.setText("");
+            lblRating.setText("");
+        }
     }
 
     @SuppressWarnings("unchecked")
