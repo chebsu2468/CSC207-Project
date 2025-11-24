@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class FavoriteList {
-    private ArrayList<String> favorites;
+    private final ArrayList<String> favorites;
 
     public FavoriteList() {
         favorites = new ArrayList<String>();
@@ -18,13 +18,15 @@ public class FavoriteList {
     }
 
     public void addFavorite(String name){
-        if (!favorites.contains(name)) {
-            favorites.add(name);
-        }
+        favorites.add(name);
     }
 
     public void removeFavorite(String name){
         favorites.remove(name);
+    }
+
+    public boolean isFavorite(String name){
+        return favorites.contains(name);
     }
 
 }

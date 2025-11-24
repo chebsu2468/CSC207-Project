@@ -4,7 +4,7 @@ package Classes.add_favorite;
  * The controller for add favorite use case.
  */
 public class AddFavoriteController {
-    private AddFavoriteInputBoundary addFavoriteInteractor;
+    private final AddFavoriteInputBoundary addFavoriteInteractor;
 
     public AddFavoriteController(AddFavoriteInputBoundary addFavoriteInteractor) {
         this.addFavoriteInteractor = addFavoriteInteractor;
