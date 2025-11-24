@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class Settings extends javax.swing.JFrame {
     private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
+    private final TextSettingInput textSettingInput = new TextSettingInput(config);
     private final TextSettingOutput textSettingOutput = new TextSettingOutput(config);
 
     private String color = "black";
@@ -138,7 +139,8 @@ public class Settings extends javax.swing.JFrame {
     private void updateLabelStyle() {
         //automatic StyleUpdater
         TextSettingRequest request = new TextSettingRequest(color, size, style);
-        textSettingOutput.updateChangesAll(request, this);
+        textSettingInput.updateChangesAll(request);
+        textSettingOutput.updateALL(this);
     }
 
     public static void main(String args[]) {
