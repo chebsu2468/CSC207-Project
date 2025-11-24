@@ -9,7 +9,6 @@ import java.awt.*;
 public class TextSettingOutput {
     private final TextSettingInteractor config;
     private StrategyMap strategies;
-    private TextSettingInputBoundary interactor;
 
     public TextSettingOutput(TextSettingInteractor config) {
         this.config = config;
@@ -21,17 +20,6 @@ public class TextSettingOutput {
      * Updates the style of *all* JComponents in the given frame
      * based on the provided color, size, and font style.
      */
-    public void updateChangesAll(TextSettingRequest request, JFrame frame) {
-
-        interactor.editSettings(request);
-        Color fg = config.getColor();
-        Font font = config.getStyle();
-
-        updateComponentsRecursively(frame.getContentPane(), fg, font);
-
-        frame.revalidate();
-        frame.pack();
-    }
 
     public void updateAll(JFrame frame) {
         Color fg = config.getColor();
