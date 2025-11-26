@@ -5,9 +5,11 @@ import Classes.Settings.TextSettingController;
 
 import javax.swing.*;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class MultiSuccesfulSearch extends javax.swing.JFrame
 {
-    private final TextSettingController config = new TextSettingController("settings.csv");
+    private final TextSettingController config = new TextSettingController(DEFAULT_SETTINGS_FILE);
 
     public MultiSuccesfulSearch(Animal[] animals)
     {

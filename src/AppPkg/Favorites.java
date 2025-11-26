@@ -7,9 +7,11 @@ import Classes.add_favorite.*;
 
 import javax.swing.*;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class Favorites extends javax.swing.JFrame
 {
-    private final TextSettingController config = new TextSettingController("settings.csv");
+    private final TextSettingController config = new TextSettingController(DEFAULT_SETTINGS_FILE);
 
     public Favorites()
     {

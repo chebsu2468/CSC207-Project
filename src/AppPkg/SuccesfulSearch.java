@@ -9,9 +9,11 @@ import Classes.add_favorite.FileFavoritesDataAccessObject;
 
 import java.awt.*;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class SuccesfulSearch extends javax.swing.JFrame
 {
-    private final TextSettingController config = new TextSettingController("settings.csv");
+    private final TextSettingController config = new TextSettingController(DEFAULT_SETTINGS_FILE);
     private Animal animal;
 
     public SuccesfulSearch(Animal animal)
