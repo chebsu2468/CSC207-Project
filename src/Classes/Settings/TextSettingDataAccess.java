@@ -3,7 +3,9 @@ package Classes.Settings;
 import java.awt.Color;
 import java.io.*;
 
-public class TextSettingDataAccess {
+import static Classes.Settings.SettingConstants.*;
+
+public class TextSettingDataAccess implements TextSettingGateway{
     private final String filePath;
 
     public TextSettingDataAccess(String filePath) {
@@ -14,7 +16,7 @@ public class TextSettingDataAccess {
         File file = new File(filePath);
 
         if (!file.exists()) {
-            System.out.println("Settings file not found — creating default...");
+            System.out.println(FILE_NOT_FOUND);
             TextSetting defaultSetting = getDefaultSetting();
             save(defaultSetting);
             return defaultSetting;
@@ -38,26 +40,26 @@ public class TextSettingDataAccess {
             return new TextSetting(size, new Color(r, g, b), fontName);
 
         } catch (IOException | NumberFormatException e) {
-            System.err.println("Error loading settings: " + e.getMessage());
+            System.err.println(FAILED_TO_LOAD + e.getMessage());
             return getDefaultSetting();
         }
     }
 
     public void save(TextSetting setting) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            bw.write("textSize,textColorR,textColorG,textColorB,fontName\n");
-            bw.write(String.format("%d,%d,%d,%d,%s\n",
+            bw.write(SAVE_SETTING_HEADER_REGEX);
+            bw.write(String.format(SAVE_SETTING_INFO_FORMAT,
                     setting.getTextSize(),
                     setting.getTextColor().getRed(),
                     setting.getTextColor().getGreen(),
                     setting.getTextColor().getBlue(),
                     setting.getFontName()));
         } catch (IOException e) {
-            System.err.println("Error saving settings: " + e.getMessage());
+            System.err.println(FAILED_TO_SAVE + e.getMessage());
         }
     }
 
     private TextSetting getDefaultSetting() {
-        return new TextSetting(13, new Color(100, 50, 200), "Arial");
+        return new TextSetting(DEFAULT_FONT_SIZE, ERROR_COLOR, DEFAULT_FONT_NAME);
     }
 }

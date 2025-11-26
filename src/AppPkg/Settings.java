@@ -1,14 +1,15 @@
 package AppPkg;
 
 import Classes.Settings.*;
-import Classes.Settings.TextSettingInteractor;
+
+import static Classes.Settings.SettingConstants.*;
 
 public class Settings extends javax.swing.JFrame {
-    private final TextSettingController textSettingController = new TextSettingController("settings.csv");
+    private final TextSettingController textSettingController = new TextSettingController(DEFAULT_SETTINGS_FILE);
 
-    private String color = "black";
-    private String style = "Arial";
-    private int size = 2;
+    private int size = DEFAULT_FONT_SIZE;
+    private String style = DEFAULT_FONT_NAME;
+    private String color = NAME_BLACK;
 
     public Settings() {
         initComponents();
@@ -33,25 +34,25 @@ public class Settings extends javax.swing.JFrame {
         btnHome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Settings");
+        setTitle(TITLE_SETTINGS);
 
-        lblFontSize.setText("Font Size");
-        cBoxFontSizes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", "4", "5"}));
+        lblFontSize.setText(SIZE_LABEL);
+        cBoxFontSizes.setModel(new javax.swing.DefaultComboBoxModel<>(FONT_SIZE_OPTIONS));
 
-        lblFont.setText("Font");
+        lblFont.setText(FONT_LABEL);
 
         // Fetches all fonts available in the OS
         FontFetcher availableFont = new FontFetcher();
         String[] list = availableFont.getFonts();
         cBoxFonts.setModel(new javax.swing.DefaultComboBoxModel<>(list));
 
-        lblColor.setText("Color");
-        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"black", "blue", "green", "purple"}));
+        lblColor.setText(COLOR_LABEL);
+        cBoxColor.setModel(new javax.swing.DefaultComboBoxModel<>(SUPPORTED_COLORS));
 
-        btnSave.setText("Save");
-        btnDefault.setText("Restore Defaults");
+        btnSave.setText(SAVE_SETTING_BUTTON);
+        btnDefault.setText(RESTORE_DEFAULT_BUTTON);
 
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPkg/home.png"))); // NOI18N
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource(HOME_ICON_FILE))); // NOI18N
         btnHome.addActionListener(this::btnHomeActionPerformed);
 
         // Layout setup
@@ -122,9 +123,9 @@ public class Settings extends javax.swing.JFrame {
         cBoxColor.addActionListener(e -> color = (String) cBoxColor.getSelectedItem());
 
         btnDefault.addActionListener(e -> {
-            size = 2;
-            style = "Arial";
-            color = "black";
+            size = DEFAULT_FONT_SIZE;
+            style = DEFAULT_FONT_NAME;
+            color = NAME_BLACK;
             updateLabelStyle();
         });
 

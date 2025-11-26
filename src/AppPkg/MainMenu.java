@@ -10,9 +10,11 @@ import org.json.JSONObject;
 
 import java.awt.*;
 
+import static Classes.Settings.SettingConstants.*;
+
 public class  MainMenu extends javax.swing.JFrame
 {
-    private final TextSettingController config = new TextSettingController("settings.csv");
+    private final TextSettingController config = new TextSettingController(DEFAULT_SETTINGS_FILE);
     private APIClass api = new APIClass();
     private FuzzySearchProvider fuzzyProvider = new AnimalFuzzySearch();
 
@@ -278,11 +280,7 @@ public class  MainMenu extends javax.swing.JFrame
     private void updateLabelStyle(){
         config.updateALL(this);
         lblGreeting1.setFont(
-                new Font(
-                config.getStyleName(),
-                0,
-                36
-        ));
+                new Font(config.getStyleName(), DEFAULT_STYLE, HEADING_FONT_SIZE));
     }
 
     public static void main(String args[])

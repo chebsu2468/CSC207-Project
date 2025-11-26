@@ -3,6 +3,8 @@ package Classes.Settings;
 import javax.swing.*;
 import java.awt.*;
 
+import static Classes.Settings.SettingConstants.*;
+
 public class TextSettingInteractor implements TextSettingInputBoundary {
 
     private final TextSettingDataAccess settingFetcher;
@@ -21,19 +23,19 @@ public class TextSettingInteractor implements TextSettingInputBoundary {
 
         // Color mapping
         Color finalColor = switch (request.color.toLowerCase()) {
-            case "purple" -> new Color(70, 20, 124);
-            case "blue" -> new Color(0, 81, 161);
-            case "green" -> new Color(28, 101, 3);
-            default -> Color.BLACK;
+            case NAME_PURPLE -> PURPLE;
+            case NAME_BLUE -> BLUE;
+            case NAME_GREEN -> GREEN;
+            default -> DEFAULT_COLOR;
         };
 
         // Size mapping
         int finalSize = switch (request.size) {
-            case 1 -> 13;
-            case 2 -> 14;
-            case 4 -> 16;
-            case 5 -> 17;
-            default -> 15;
+            case 1 -> FONT_SIZE_ONE;
+            case 2 -> FONT_SIZE_TWO;
+            case 4 -> FONT_SIZE_FOUR;
+            case 5 -> FONT_SIZE_FIVE;
+            default -> DEFAULT_FONT_SIZE;
         };
 
         // Color（font color）

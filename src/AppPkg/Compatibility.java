@@ -7,9 +7,11 @@ import Classes.Compatibility.usecases.CompareAnimalsInteractor;
 import Classes.Compatibility.usecases.AnimalDataAccessInterface;
 import Classes.Compatibility.data.AnimalDataAccess;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class Compatibility extends javax.swing.JFrame
 {
-    private final TextSettingController config = new TextSettingController("settings.csv");
+    private final TextSettingController config = new TextSettingController(DEFAULT_SETTINGS_FILE);
 
     // Controller and Presenter are now part of this class for simplicity
     private final CompareAnimalsInputBoundary interactor;
