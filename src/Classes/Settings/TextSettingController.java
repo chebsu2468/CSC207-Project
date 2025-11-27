@@ -8,14 +8,7 @@ package Classes.Settings;
  */
 public class TextSettingController {
 
-    /**
-     * The input boundary interface used to modify text settings.
-     */
     private TextSettingInputBoundary config;
-
-    /**
-     * The file path where settings are saved and loaded.
-     */
     private final String filePath;
 
     /**
@@ -50,7 +43,20 @@ public class TextSettingController {
      * @return a {@link ViewModel} containing display-ready text settings
      */
     public ViewModel getViewModel() {
-        TextSettingOutputBoundary presenter = new TextSettingPresenter(config.getOutput());
-        return new ViewModel(presenter.getColor(), presenter.getFont(), presenter.getSize());
+        TextSettingOutputBoundary presenter = new TextSettingPresenter();
+
+        TextSettingOutput output = new TextSettingOutput(
+                config.getTextColor(),
+                config.getFontName(),
+                config.getTextSize()
+        );
+
+        presenter.updateUI(output);
+
+        return new ViewModel(
+                presenter.getColor(),
+                presenter.getFont(),
+                presenter.getSize()
+        );
     }
 }

@@ -1,5 +1,7 @@
 package Classes.Settings;
 
+import java.awt.*;
+
 public interface TextSettingInputBoundary {
     /**
      * Handle all the request from controller.
@@ -13,5 +15,7 @@ public interface TextSettingInputBoundary {
      *
      * @return TextSettingOutput DTO
      */
-    TextSettingOutput getOutput();
+    Color getTextColor();
+    String getFontName();
+    int getTextSize();
 }

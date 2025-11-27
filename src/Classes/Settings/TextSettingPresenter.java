@@ -2,6 +2,8 @@ package Classes.Settings;
 
 import java.awt.Color;
 
+import static Classes.Settings.SettingConstants.*;
+
 /**
  * Presenter for {@link TextSettingOutput} that implements {@link TextSettingOutputBoundary}.
  * Provides access to display-ready text settings: color, font, and size.
@@ -11,27 +13,31 @@ public class TextSettingPresenter implements TextSettingOutputBoundary {
     /**
      * The text color.
      */
-    private final Color fg;
+    private Color fg;
 
     /**
      * The font name.
      */
-    private final String font;
+    private String font;
 
     /**
      * The text size in points.
      */
-    private final int size;
+    private int size;
 
     /**
      * Constructs a presenter using the given output configuration.
-     *
-     * @param config the {@link TextSettingOutput} containing the text settings
      */
-    TextSettingPresenter(TextSettingOutput config) {
-        this.fg = config.getColor();
-        this.font = config.getFont();
-        this.size = config.getSize();
+    TextSettingPresenter() {
+        this.fg = DEFAULT_COLOR;
+        this.font = DEFAULT_FONT_NAME;
+        this.size = DEFAULT_FONT_SIZE;
+    }
+
+    public void updateUI(TextSettingOutput output) {
+        this.fg = output.getColor();
+        this.font = output.getFont();
+        this.size = output.getSize();
     }
 
     /**

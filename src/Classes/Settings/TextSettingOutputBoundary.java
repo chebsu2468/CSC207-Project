@@ -28,4 +28,6 @@ public interface TextSettingOutputBoundary {
      * @return the font
      */
     String getFont();
+
+    void updateUI(TextSettingOutput output);
 }

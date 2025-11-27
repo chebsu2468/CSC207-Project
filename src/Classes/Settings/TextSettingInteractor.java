@@ -13,7 +13,7 @@ public class TextSettingInteractor implements TextSettingInputBoundary {
     /**
      * Data access object for loading and saving text settings.
      */
-    private final TextSettingDataAccess settingFetcher;
+    private final TextSettingGateway settingFetcher;
 
     /**
      * Presenter for outputting processed text settings.
@@ -32,7 +32,7 @@ public class TextSettingInteractor implements TextSettingInputBoundary {
      */
     public TextSettingInteractor(String filePath) {
         this.settingFetcher = new TextSettingDataAccess(filePath);
-        this.presenter = new TextSettingPresenter(new TextSettingOutput());
+        this.presenter = new TextSettingPresenter();
         this.config = settingFetcher.load();
     }
 
@@ -65,24 +65,19 @@ public class TextSettingInteractor implements TextSettingInputBoundary {
         config.setFontName(request.getStyle());
 
         settingFetcher.save(config);
-
-        TextSettingOutput output = new TextSettingOutput(
-                config.getTextColor(),
-                config.getFontName(),
-                config.getTextSize());
-
-        presenter = new TextSettingPresenter(output);
     }
 
-    /**
-     * Returns the current output representing the text settings.
-     *
-     * @return a {@link TextSettingOutput} containing current color, font, and size
-     */
-    public TextSettingOutput getOutput() {
-        return new TextSettingOutput(
-                config.getTextColor(),
-                config.getFontName(),
-                config.getTextSize());
+
+    public Color getTextColor() {
+        return config.getTextColor();
     }
+
+    public String getFontName() {
+        return config.getFontName();
+    }
+
+    public int getTextSize() {
+        return config.getTextSize();
+    }
+
 }
