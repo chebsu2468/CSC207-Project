@@ -2,8 +2,6 @@ package Classes.Settings;
 
 import java.awt.Color;
 
-import static Classes.Settings.SettingConstants.*;
-
 /**
  * Output model representing processed text settings for display.
  * Stores color, font name, and font size.
