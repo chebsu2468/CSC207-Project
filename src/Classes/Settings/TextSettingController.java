@@ -8,7 +8,8 @@ package Classes.Settings;
  */
 public class TextSettingController {
 
-    private TextSettingInputBoundary config;
+    private final TextSettingInputBoundary config;
+    private final TextSettingOutputBoundary presenter;
     private final String filePath;
 
     /**
@@ -19,6 +20,7 @@ public class TextSettingController {
      */
     public TextSettingController(String filePath) {
         this.config = new TextSettingInteractor(filePath);
+        this.presenter = new TextSettingPresenter();
         this.filePath = filePath;
     }
 
@@ -33,7 +35,6 @@ public class TextSettingController {
     public void updateSettings(String color, int size, String style) {
         TextSettingInput request = new TextSettingInput(color, size, style);
         config.editSettings(request);
-        config = new TextSettingInteractor(filePath);
     }
 
     /**
@@ -43,7 +44,6 @@ public class TextSettingController {
      * @return a {@link ViewModel} containing display-ready text settings
      */
     public ViewModel getViewModel() {
-        TextSettingOutputBoundary presenter = new TextSettingPresenter();
 
         TextSettingOutput output = new TextSettingOutput(
                 config.getTextColor(),

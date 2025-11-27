@@ -44,7 +44,7 @@ public final class SettingConstants {
     public static final String FAILED_TO_SAVE = "Error saving settings:";
     public static final String FILE_NOT_FOUND = "Settings file not found — creating default...";
 
-    public static final String[] SUPPORTED_COLORS = {NAME_PURPLE, NAME_GREEN, NAME_BLUE, NAME_BLACK};
+    public static final String[] SUPPORTED_COLORS = {NAME_BLACK, NAME_PURPLE, NAME_GREEN, NAME_BLUE};
     public static final String[] FONT_SIZE_OPTIONS = {"1", "2", "3", "4", "5"};
 
 }
