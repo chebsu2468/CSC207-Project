@@ -39,15 +39,6 @@ public class TextSettingOutput {
     }
 
     /**
-     * Constructs a TextSettingOutput with default settings.
-     */
-    public TextSettingOutput() {
-        this.color = DEFAULT_COLOR;
-        this.font = DEFAULT_FONT_NAME;
-        this.size = DEFAULT_FONT_SIZE;
-    }
-
-    /**
      * Returns the text color.
      *
      * @return the color
