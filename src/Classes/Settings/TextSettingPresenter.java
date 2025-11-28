@@ -1,69 +1,72 @@
 package Classes.Settings;
 
-import Classes.Settings.UIStrategy.StrategyMap;
-import Classes.Settings.UIStrategy.UIStyleStrategy;
+import java.awt.Color;
 
-import javax.swing.*;
-import java.awt.*;
+import static Classes.Settings.SettingConstants.*;
 
+/**
+ * Presenter for {@link TextSettingOutput} that implements {@link TextSettingOutputBoundary}.
+ * Provides access to display-ready text settings: color, font, and size.
+ */
 public class TextSettingPresenter implements TextSettingOutputBoundary {
-    private final StrategyMap strategies;
+
+    /**
+     * The text color.
+     */
     private Color fg;
-    private Font font;
 
-    public TextSettingPresenter(TextSettingInteractor config) {
-        this.fg = config.getColor();
-        this.font = config.getStyle();
-        this.strategies = new StrategyMap();
+    /**
+     * The font name.
+     */
+    private String font;
 
+    /**
+     * The text size in points.
+     */
+    private int size;
+
+    /**
+     * Constructs a presenter using the given output configuration.
+     */
+    TextSettingPresenter() {
+        this.fg = DEFAULT_COLOR;
+        this.font = DEFAULT_FONT_NAME;
+        this.size = DEFAULT_FONT_SIZE;
     }
 
-    public void updateOutput(TextSetting config) {
-        fg = config.getTextColor();
-        font = config.getFont();
+    public void updateUI(TextSettingOutput output) {
+        this.fg = output.getColor();
+        this.font = output.getFont();
+        this.size = output.getSize();
     }
 
     /**
-     * Updates the style of *all* JComponents in the given frame
-     * based on the provided color, size, and font style.
+     * Returns the text color.
+     *
+     * @return the color
      */
     @Override
-    public void presentSettingOutput(JFrame frame) {
-
-        updateComponentsRecursively(frame.getContentPane(), fg, font);
-        frame.revalidate();
-        frame.pack();
-    }
-
-    @Override
-    public void presentSettingOutput(JDialog dialog) {
-
-        updateComponentsRecursively(dialog.getContentPane(), fg, font);
-        dialog.revalidate();
-        dialog.pack();
-    }
-
-    @Override
-    public void presentSettingOutput(Window window) {
-
-        updateComponentsRecursively(window, fg, font);
-        window.revalidate();
-        window.pack();
+    public Color getColor() {
+        return fg;
     }
 
     /**
-     * Recursively traverses through all components in a container
-     * and applies the given color and font.
+     * Returns the font name.
+     *
+     * @return the font
      */
-    private void updateComponentsRecursively(Container container, Color c, Font font) {
-        for (Component comp : container.getComponents()) {
+    @Override
+    public String getFont() {
+        return font;
+    }
 
-            UIStyleStrategy strategy = this.strategies.getStrategy(comp.getClass());
-            strategy.apply(comp, c, font);
-
-            if (comp instanceof Container) {
-                updateComponentsRecursively((Container) comp, c, font);
-            }
-        }
+    /**
+     * Returns the text size.
+     *
+     * @return the size
+     */
+    @Override
+    public int getSize() {
+        return size;
     }
 }

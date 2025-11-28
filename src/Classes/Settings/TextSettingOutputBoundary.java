@@ -1,12 +1,33 @@
 package Classes.Settings;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 
+/**
+ * Interface representing the output boundary for text settings.
+ * Provides methods to retrieve color, font size, and font name for display.
+ */
 public interface TextSettingOutputBoundary {
-    void presentSettingOutput(JFrame frame);
 
-    void presentSettingOutput(JDialog dialog);
+    /**
+     * Returns the text color.
+     *
+     * @return the color
+     */
+    Color getColor();
 
-    void presentSettingOutput(Window window);
+    /**
+     * Returns the text size in points.
+     *
+     * @return the size
+     */
+    int getSize();
+
+    /**
+     * Returns the font name.
+     *
+     * @return the font
+     */
+    String getFont();
+
+    void updateUI(TextSettingOutput output);
 }

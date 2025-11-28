@@ -1,55 +1,62 @@
 package Classes.Settings;
 
-
-import javax.swing.*;
-import java.awt.*;
-
+/**
+ * Controller responsible for handling user actions related to text settings.
+ * It receives input from the UI, packages it into request models, and delegates
+ * the update operation to the {@link TextSettingInputBoundary}. After updating,
+ * it refreshes the interactor to ensure the latest settings are loaded.
+ */
 public class TextSettingController {
-    private TextSettingInputBoundary config;
-    private TextSettingOutputBoundary presenter;
+
+    private final TextSettingInputBoundary config;
+    private final TextSettingOutputBoundary presenter;
     private final String filePath;
 
+    /**
+     * Creates a controller that manages text settings stored in the given file path.
+     * This constructor initializes the interactor that performs the business logic.
+     *
+     * @param filePath the path to the settings file
+     */
     public TextSettingController(String filePath) {
         this.config = new TextSettingInteractor(filePath);
-        this.presenter = new TextSettingPresenter((TextSettingInteractor) config);
+        this.presenter = new TextSettingPresenter();
         this.filePath = filePath;
     }
 
+    /**
+     * Updates the text settings using the provided values.
+     * A request model is created and passed to the input boundary for processing.
+     * After updating, the interactor is refreshed to load the new settings.
+     * @param color the new text color as a string
+     * @param size  the new text size in points
+     * @param style the new font style or name
+     */
     public void updateSettings(String color, int size, String style) {
-        TextSettingRequest request = new TextSettingRequest(color, size, style);
+        TextSettingInput request = new TextSettingInput(color, size, style);
         config.editSettings(request);
-        this.presenter = new TextSettingPresenter((TextSettingInteractor) config);
     }
 
-    public Color getColor() {
-        return config.getColor();
-    }
+    /**
+     * Returns a {@link ViewModel} representing the current text settings.
+     * A presenter is created from the interactor’s output, and the view model is
+     * constructed using the presenter’s processed values.
+     * @return a {@link ViewModel} containing display-ready text settings
+     */
+    public ViewModel getViewModel() {
 
-    public int getSize() {
-        return config.getSize();
-    }
+        TextSettingOutput output = new TextSettingOutput(
+                config.getTextColor(),
+                config.getFontName(),
+                config.getTextSize()
+        );
 
-    public String getStyleName() {
-        return config.getStyleName();
-    }
+        presenter.updateUI(output);
 
-    public Font getStyle() {
-        return config.getStyle();
+        return new ViewModel(
+                presenter.getColor(),
+                presenter.getFont(),
+                presenter.getSize()
+        );
     }
-
-    public void updateALL(Window obj) {
-        // Display the UI changes
-        presenter.presentSettingOutput(obj);
-    }
-
-    public void updateALL(JDialog obj) {
-        // Display the UI changes
-        presenter.presentSettingOutput(obj);
-    }
-
-    public void updateALL(JFrame obj) {
-        // Display the UI changes
-        presenter.presentSettingOutput(obj);
-    }
-
 }
