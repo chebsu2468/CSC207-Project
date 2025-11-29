@@ -1,9 +1,6 @@
 package AppPkg;
 
 import Classes.Animal;
-import Classes.Settings.*;
-import Classes.Settings.TextSettingInteractor;
-import Classes.Settings.TextSettingOutput;
 import Classes.add_favorite.AddFavoriteController;
 import Classes.add_favorite.AddFavoriteInputBoundary;
 import Classes.add_favorite.AddFavoriteInteractor;
@@ -11,10 +8,11 @@ import Classes.add_favorite.FileFavoritesDataAccessObject;
 
 import java.awt.*;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class SuccesfulSearch extends javax.swing.JFrame
 {
-    private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
-    private final TextSettingOutput textSettingOutput = new TextSettingOutput(config);
+    private final UIManager config = new UIManager(DEFAULT_SETTINGS_FILE);
     private Animal animal;
 
     public SuccesfulSearch(Animal animal)
@@ -51,7 +49,14 @@ public class SuccesfulSearch extends javax.swing.JFrame
         btnGenerateTradingCard = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                new MainMenu().setVisible(true); // Open MainMenu
+                dispose(); // Close current frame
+            }
+        });
 
         lblHeading.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblHeading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -153,7 +158,7 @@ public class SuccesfulSearch extends javax.swing.JFrame
     }
 
     private void updateLabelStyle(){
-        textSettingOutput.updateAll(this);
+        config.updateALL(this);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

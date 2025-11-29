@@ -8,13 +8,13 @@ package AppPkg;
 import Classes.Filter.FilterController;
 import Classes.Filter.FilterViewModel;
 import Classes.Animal;
-import Classes.Settings.TextSettingInteractor;
-import Classes.Settings.TextSettingOutput;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
 
 public class FilterGUI extends JFrame {
 
@@ -34,8 +34,7 @@ public class FilterGUI extends JFrame {
     private JButton btnReset;
     private JButton btnClose;
 
-    private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
-    private final TextSettingOutput TextSettingOutput = new TextSettingOutput(config);
+    private final UIManager config = new UIManager(DEFAULT_SETTINGS_FILE);
 
     private List<String> selectedTags;
     private final FilterController filterController;
@@ -58,7 +57,7 @@ public class FilterGUI extends JFrame {
         initComponents();
         setupListeners();
         setLocationRelativeTo(parent);
-        TextSettingOutput.updateAll(this);
+        config.updateALL(this);
     }
 
     private void initComponents() {
@@ -261,7 +260,7 @@ public class FilterGUI extends JFrame {
             showResultsList(animals);
         }
 
-        TextSettingOutput.updateAll(this);
+        config.updateALL(this);
     }
 
     private void appendResultsFromViewModel() {
@@ -287,7 +286,7 @@ public class FilterGUI extends JFrame {
         btnLoadMore.setEnabled(filterViewModel.hasMore());
 
         System.out.println("Total animals now: " + model.getSize());
-        TextSettingOutput.updateAll(this);
+        config.updateALL(this);
     }
 
     private void showNoResultsMessage() {

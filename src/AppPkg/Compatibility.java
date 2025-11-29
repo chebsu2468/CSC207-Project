@@ -1,17 +1,16 @@
 package AppPkg;
 
-import Classes.Settings.TextSettingInteractor;
-import Classes.Settings.TextSettingOutput;
 import Classes.Compatibility.usecases.CompareAnimalsInputBoundary;
 import Classes.Compatibility.usecases.CompareAnimalsOutputBoundary;
 import Classes.Compatibility.usecases.CompareAnimalsInteractor;
 import Classes.Compatibility.usecases.AnimalDataAccessInterface;
 import Classes.Compatibility.data.AnimalDataAccess;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class Compatibility extends javax.swing.JFrame
 {
-    private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
-    private final TextSettingOutput textSettingOutput = new TextSettingOutput(config);
+    private final UIManager config = new UIManager(DEFAULT_SETTINGS_FILE);
 
     // Controller and Presenter are now part of this class for simplicity
     private final CompareAnimalsInputBoundary interactor;
@@ -51,6 +50,22 @@ public class Compatibility extends javax.swing.JFrame
         @Override
         public void presentAnimal2Error() {
             lblSearchedAnimal2.setText("Invalid Animal 2");
+            txaMatching.setText("");
+            txaConflicting.setText("");
+            lblRating.setText("");
+        }
+
+        @Override
+        public void presentAnimal1Empty() {
+            lblSearchedAnimal1.setText("Empty Animal 1");
+            txaMatching.setText("");
+            txaConflicting.setText("");
+            lblRating.setText("");
+        }
+
+        @Override
+        public void presentAnimal2Empty() {
+            lblSearchedAnimal2.setText("Empty Animal 2");
             txaMatching.setText("");
             txaConflicting.setText("");
             lblRating.setText("");
@@ -243,7 +258,7 @@ public class Compatibility extends javax.swing.JFrame
     }
 
     private void updateLabelStyle(){
-        textSettingOutput.updateAll(this);
+        config.updateALL(this);
     }
 
     // Variables declaration

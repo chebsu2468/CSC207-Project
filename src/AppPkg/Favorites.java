@@ -2,20 +2,20 @@ package AppPkg;
 
 import Classes.Animal;
 import Classes.APIClass;
-import Classes.Settings.*;
 import Classes.add_favorite.*;
 
 import javax.swing.*;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class Favorites extends javax.swing.JFrame
 {
-    private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
-    private final TextSettingOutput textSettingOutput = new TextSettingOutput(config);
+    private final UIManager config = new UIManager(DEFAULT_SETTINGS_FILE);
 
     public Favorites()
     {
         initComponents();
-        textSettingOutput.updateALL(this);
+        config.updateALL(this);
     }
 
     @SuppressWarnings("unchecked")

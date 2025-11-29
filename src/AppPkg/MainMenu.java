@@ -2,26 +2,32 @@ package AppPkg;
 
 import Classes.APIClass;
 import Classes.Animal;
-import Classes.Filter.AnimalNamesProvider;
 import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
 import Classes.Filter.FuzzySearch.FuzzySearchProvider;
-import Classes.Settings.TextSettingInteractor;
-import Classes.Settings.TextSettingOutput;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.swing.JOptionPane;
 import java.awt.*;
+
+import static Classes.Settings.SettingConstants.*;
 
 public class  MainMenu extends javax.swing.JFrame
 {
-    private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
-    private final TextSettingOutput textSettingOutput = new TextSettingOutput(config);
+    private final UIManager config = new UIManager(DEFAULT_SETTINGS_FILE);
+    private APIClass api = new APIClass();
+    private FuzzySearchProvider fuzzyProvider = new AnimalFuzzySearch();
 
     public MainMenu()
     {
         initComponents();
         updateLabelStyle();// apply setting changes
+    }
+
+    public MainMenu(FuzzySearchProvider fuzzyProvider, APIClass api){
+        this.fuzzyProvider = fuzzyProvider;
+        this.api = api;
+        initComponents();
+        updateLabelStyle();
     }
 
     @SuppressWarnings("unchecked")
@@ -111,8 +117,8 @@ public class  MainMenu extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblGreeting1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(118, 118, 118)
+                        .addComponent(lblGreeting1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
                         .addComponent(btnSettings))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
@@ -182,7 +188,7 @@ public class  MainMenu extends javax.swing.JFrame
         if (animalName.isEmpty()){  // ensures the user has given an input. if not, terminates teh call
             lblError.setText("Please select an animal name.");
         } else {
-            APIClass aClass = new Classes.APIClass();               // instantiates APIClass
+            APIClass aClass = this.api;               // instantiates APIClass
 
             if (animalName.contains(" "))
             {
@@ -193,7 +199,7 @@ public class  MainMenu extends javax.swing.JFrame
             if (result == null) {
 
                 //fixed
-                FuzzySearchProvider fuzzy = new AnimalFuzzySearch();
+                FuzzySearchProvider fuzzy = this.fuzzyProvider;
                 String suggestion = fuzzy.getSuggestion(animalName);
 
                 if (suggestion != null && !suggestion.isEmpty()) {
@@ -271,13 +277,9 @@ public class  MainMenu extends javax.swing.JFrame
     }//GEN-LAST:event_btnFavoritesActionPerformed
 
     private void updateLabelStyle(){
-        textSettingOutput.updateAll(this);
+        config.updateALL(this);
         lblGreeting1.setFont(
-                new Font(
-                config.getStyleName(),
-                0,
-                36
-        ));
+                new Font(config.getFont().getName(), DEFAULT_STYLE, HEADING_FONT_SIZE));
     }
 
     public static void main(String args[])
