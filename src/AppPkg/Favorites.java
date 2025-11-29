@@ -109,9 +109,6 @@ public class Favorites extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
-    /**
-     * User double-click on the name to get the information.
-     */
     private void btnMouseClickActionPerformed(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2) {
             String animalName = jListFavs.getSelectedValue().toLowerCase().trim();
@@ -125,9 +122,6 @@ public class Favorites extends javax.swing.JFrame
         }
     }
 
-    /**
-     * User clicks on the name first, then clicks remove to remove the name.
-     */
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {
         final AddFavoriteInputBoundary addFavoriteInteractor = new AddFavoriteInteractor(favoritesDataAccessObject);
         AddFavoriteController addFavoriteController = new AddFavoriteController(addFavoriteInteractor);
