@@ -1,7 +1,7 @@
 
 package AppPkg;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 import Classes.GenerateTradingCard.GenerateTradingCardInputBoundary;
 import Classes.GenerateTradingCard.GenerateTradingCardInteractor;
 import Classes.GenerateTradingCard.GenerateTradingCardRequestModel;

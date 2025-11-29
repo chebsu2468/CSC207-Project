@@ -1,9 +1,10 @@
 package AppPkg;
 
-import Classes.Animal;
-import Classes.APIClass;
+import Classes.retrieveInfo.Animal;
+import Classes.retrieveInfo.APIClass;
 import Classes.Settings.*;
 import Classes.add_favorite.*;
+import Classes.retrieveInfo.AnimalFactory;
 
 import javax.swing.*;
 
@@ -11,9 +12,11 @@ public class Favorites extends javax.swing.JFrame
 {
     private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
     private final TextSettingOutput textSettingOutput = new TextSettingOutput(config);
+    private final AnimalFactory factory;
 
     public Favorites()
     {
+        this.factory = new AnimalFactory();
         initComponents();
         textSettingOutput.updateALL(this);
     }
@@ -116,7 +119,7 @@ public class Favorites extends javax.swing.JFrame
                 animalName = animalName.replace(" ", "%20");
             }
             APIClass apiClass = new APIClass();
-            Animal animal = new Animal(apiClass.getAnimalData(animalName));
+            Animal animal = factory.fromJsonArrayString(animalName);
             new SuccesfulSearch(animal).setVisible(true);
             this.dispose();
         }

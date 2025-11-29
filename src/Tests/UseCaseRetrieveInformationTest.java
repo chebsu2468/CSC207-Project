@@ -1,7 +1,7 @@
 package Tests;
 
 import AppPkg.MainMenu;
-import Classes.APIClass;
+import Classes.retrieveInfo.APIClass;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;

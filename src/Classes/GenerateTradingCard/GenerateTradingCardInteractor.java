@@ -1,6 +1,6 @@
 package Classes.GenerateTradingCard;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

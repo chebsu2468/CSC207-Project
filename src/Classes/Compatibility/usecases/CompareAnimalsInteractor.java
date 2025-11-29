@@ -1,6 +1,6 @@
 package Classes.Compatibility.usecases;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 import java.util.HashSet;
 import java.util.Set;
 

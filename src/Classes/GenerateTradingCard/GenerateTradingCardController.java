@@ -1,5 +1,7 @@
 package Classes.GenerateTradingCard;
 
+import Classes.retrieveInfo.Animal;
+
 public class GenerateTradingCardController {
 
     private final GenerateTradingCardInputBoundary interactor;
@@ -8,7 +10,7 @@ public class GenerateTradingCardController {
         this.interactor = interactor;
     }
 
-    public TradingCardViewModel generateCard(String animalName, Classes.Animal animal) {
+    public TradingCardViewModel generateCard(String animalName, Animal animal) {
 
         // Create the request model.
         GenerateTradingCardRequestModel request = new GenerateTradingCardRequestModel(animal);
