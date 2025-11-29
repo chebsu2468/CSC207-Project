@@ -18,6 +18,10 @@ public final class SettingConstants {
     public static final int FONT_SIZE_FOUR = 16;
     public static final int FONT_SIZE_FIVE = 17;
     public static final int HEADING_FONT_SIZE = 36;
+    public static final int ONE = 1;
+    public static final int TWO = 2;
+    public static final int FOUR = 4;
+    public static final int FIVE = 5;
 
     public static final Color ERROR_COLOR = new Color(100, 50, 200);
     public static final Color PURPLE = new Color(70, 20, 124);

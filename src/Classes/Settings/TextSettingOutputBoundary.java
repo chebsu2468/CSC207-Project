@@ -29,5 +29,5 @@ public interface TextSettingOutputBoundary {
      */
     String getFont();
 
-    void updateUI(TextSettingOutput output);
+    ViewModel updateView(TextSettingOutput output);
 }
