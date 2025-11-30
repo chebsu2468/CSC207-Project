@@ -8,7 +8,6 @@ import java.awt.Color;
 public final class SettingConstants {
 
     private SettingConstants() {
-
     }
 
     public static final int DEFAULT_STYLE = 0;
