@@ -1,6 +1,8 @@
 package AppPkg;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
+import Classes.Settings.TextSettingInteractor;
+import Classes.Settings.TextSettingOutput;
 
 import javax.swing.*;
 

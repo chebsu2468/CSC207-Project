@@ -3,7 +3,7 @@ package Classes.GenerateTradingCard;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 import Classes.GenerateTradingCard.CardImageGenerator;
 
 import static Classes.GenerateTradingCard.CardAppearanceConstants.*;
@@ -40,7 +40,7 @@ public final class Java2dCardGenerator implements CardImageGenerator {
 
         int y = drawTitle(g, animal.getName());
         y = drawDivider(g,y);
-        y = drawWrappedText(g, animal.getSlogan(), y);
+        y = drawWrappedText(g, animal.getMostDistinctiveFeature(), y);
         y = drawDivider(g,y);
 
         y = drawStat(g,"Type",animal.getGroup(),y);

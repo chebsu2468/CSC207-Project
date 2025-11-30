@@ -1,6 +1,7 @@
 package Classes.GenerateTradingCard;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
+import Classes.retrieveInfo.AnimalFactory;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
@@ -73,7 +74,7 @@ class GenerateTradingCardInteractorTest {
         GenerateTradingCardInteractor interactor =
                 new GenerateTradingCardInteractor(presenter, generator);
 
-        Animal fox = new Animal(ANIMAL_JSON);
+        Animal fox = new AnimalFactory().fromJsonArrayString(ANIMAL_JSON);
 
         TradingCardViewModel result =
                 interactor.generate(new GenerateTradingCardRequestModel(fox));

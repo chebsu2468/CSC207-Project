@@ -7,7 +7,9 @@ package AppPkg;
 
 import Classes.Filter.FilterController;
 import Classes.Filter.FilterViewModel;
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
+import Classes.Settings.TextSettingInteractor;
+import Classes.Settings.TextSettingOutput;
 
 import javax.swing.*;
 import java.awt.*;

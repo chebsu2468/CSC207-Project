@@ -1,9 +1,13 @@
 package AppPkg;
 
-import Classes.APIClass;
-import Classes.Animal;
+import AppPkg.Controllers.SearchController;
+import AppPkg.Controllers.SearchResult;
+import Classes.retrieveInfo.APIClass;
 import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
 import Classes.Filter.FuzzySearch.FuzzySearchProvider;
+import Classes.Settings.TextSettingInteractor;
+import Classes.Settings.TextSettingOutput;
+import Classes.retrieveInfo.AnimalFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,8 +21,11 @@ public class  MainMenu extends javax.swing.JFrame
     private APIClass api = new APIClass();
     private FuzzySearchProvider fuzzyProvider = new AnimalFuzzySearch();
 
+    private final SearchController searchController;
+
     public MainMenu()
     {
+        this.searchController = new SearchController(this.api, this.fuzzyProvider, new AnimalFactory());
         initComponents();
         updateLabelStyle();// apply setting changes
     }
@@ -26,6 +33,7 @@ public class  MainMenu extends javax.swing.JFrame
     public MainMenu(FuzzySearchProvider fuzzyProvider, APIClass api){
         this.fuzzyProvider = fuzzyProvider;
         this.api = api;
+        this.searchController = new SearchController(this.api, this.fuzzyProvider, new AnimalFactory());
         initComponents();
         updateLabelStyle();
     }
@@ -112,59 +120,59 @@ public class  MainMenu extends javax.swing.JFrame
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblGreeting1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93)
-                        .addComponent(btnSettings))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(lblQuestion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                        .addComponent(txfAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(btnCompatibility)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51))
-            .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(251, 251, 251)
-                .addComponent(btnSearch)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(lblGreeting2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(lblGreeting1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(93, 93, 93)
+                                                .addComponent(btnSettings))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(55, 55, 55)
+                                                .addComponent(lblQuestion)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                                .addComponent(txfAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(28, 28, 28)
+                                                .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(btnCompatibility)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51))
+                        .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(251, 251, 251)
+                                .addComponent(btnSearch)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblGreeting2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSettings)
-                    .addComponent(lblGreeting1))
-                .addGap(18, 18, 18)
-                .addComponent(lblGreeting2)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txfAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblError)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch)
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCompatibility)
-                    .addComponent(btnFavorites))
-                .addGap(30, 30, 30))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnSettings)
+                                        .addComponent(lblGreeting1))
+                                .addGap(18, 18, 18)
+                                .addComponent(lblGreeting2)
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txfAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lblQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblError)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSearch)
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnCompatibility)
+                                        .addComponent(btnFavorites))
+                                .addGap(30, 30, 30))
         );
 
         pack();
@@ -177,82 +185,38 @@ public class  MainMenu extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_btnSettingsActionPerformed
 
-    private String linkName(String animal_name){
-        return animal_name.replace(" ", "%20");
-    }
+//    private String linkName(String animal_name){
+//        return animal_name.replace(" ", "%20");
+//    }
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSearchActionPerformed
     {//GEN-HEADEREND:event_btnSearchActionPerformed
-        String animalName = txfAnimal.getText().toLowerCase().trim();  // gets the animal name, and makes it lowercase
+        String query = txfAnimal.getText();
+        SearchResult res = searchController.search(query);
 
-        if (animalName.isEmpty()){  // ensures the user has given an input. if not, terminates teh call
-            lblError.setText("Please select an animal name.");
-        } else {
-            APIClass aClass = this.api;               // instantiates APIClass
-
-            if (animalName.contains(" "))
-            {
-                animalName = linkName(animalName);
+        if (!res.success) {
+            if (res.suggestion != null && !res.suggestion.isEmpty()) {
+                lblError.setText(res.message);
+                lblError.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                lblError.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        txfAnimal.setText(res.suggestion);
+                        btnSearchActionPerformed(null);
+                    }
+                });
+            } else {
+                lblError.setText(res.message);
             }
+            return;
+        }
 
-            String result = aClass.getAnimalData(animalName);       // calls getAnimalData to get the JSON data of the animal
-            if (result == null) {
-
-                //fixed
-                FuzzySearchProvider fuzzy = this.fuzzyProvider;
-                String suggestion = fuzzy.getSuggestion(animalName);
-
-                if (suggestion != null && !suggestion.isEmpty()) {
-                    String htmlText = "<html>Animal not found. Did you mean: <a href=''>" + suggestion + "</a>?</html>";
-                    lblError.setText(htmlText);
-
-                    // Add click listener to the label
-                    lblError.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    lblError.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mouseClicked(java.awt.event.MouseEvent evt) {
-                            // When clicked, search for the suggested animal
-                            txfAnimal.setText(suggestion);
-                            btnSearchActionPerformed(null); // Trigger search again
-                        }
-                    });
-                } else {
-                    lblError.setText("Animal '" + animalName + "' not found.");
-                }
-                return;
-            }
-            int numResults = aClass.numResults();                   // gets the number of animals' data that was returned
-            Animal searched = new Animal(result);
-
-            System.out.println(result);
-
-
-            if (numResults == 0)   // asks the user to ensure they entered the correct animal because an animal with the user inputted spelling doesn't exist in the API
-            {
-                lblError.setText("Please double check animal name.");
-            }
-            if (numResults == 1)    // if there is only 1 outputting result, open SuccesfulSearch because the animal's data will be output there
-            {
-                new SuccesfulSearch(searched).setVisible(true);
-                this.dispose();
-            }
-            if (numResults >= 2)
-            {
-                // makes an array of all the animals that the api returns with teh search
-                JSONArray jsonArray = new JSONArray(result);
-                Animal[] animals = new Animal[numResults];
-                for (int i = 0; i < numResults; i++) {
-                    JSONObject singleAnimal = jsonArray.getJSONObject(i);
-
-                    // Wrap it in a single-element JSONArray (your constructor expects this)
-                    JSONArray singleArray = new JSONArray();
-                    singleArray.put(singleAnimal);
-
-                    animals[i] = new Animal(singleArray.toString());
-                }
-
-                new MultiSuccesfulSearch(animals).setVisible(true);
-                this.dispose();
-            }
+        int n = res.animals.length;
+        if (n == 1) {
+            new SuccesfulSearch(res.animals[0]).setVisible(true);
+            this.dispose();
+        } else if (n >= 2) {
+            new MultiSuccesfulSearch(res.animals).setVisible(true);
+            this.dispose();
         }
 
     }//GEN-LAST:event_btnSearchActionPerformed

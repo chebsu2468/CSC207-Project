@@ -1,6 +1,7 @@
 package Classes.Compatibility.usecases;
 
-public interface CompareAnimalsOutputBoundary {
+public interface
+CompareAnimalsOutputBoundary {
     void presentSuccess(String animal1Name, String animal2Name,
                         String matching, String conflicting, String rating);
     void presentAnimal1Error();

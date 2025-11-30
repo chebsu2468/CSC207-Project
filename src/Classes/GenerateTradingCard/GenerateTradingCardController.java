@@ -1,10 +1,7 @@
 package Classes.GenerateTradingCard;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 
-/**
- * Handles requests to generate trading card view models.
- */
 public class GenerateTradingCardController {
 
     private final GenerateTradingCardInputBoundary interactor;

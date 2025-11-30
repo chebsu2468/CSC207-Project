@@ -3,7 +3,7 @@
  */
 package AppPkg;
 
-import Classes.APIClass;
+import Classes.retrieveInfo.APIClass;
 import Classes.Filter.*;
 
 import javax.swing.*;

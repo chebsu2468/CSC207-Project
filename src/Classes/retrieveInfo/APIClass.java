@@ -1,4 +1,4 @@
-package Classes;
+package Classes.retrieveInfo;
 
 // Required imports for reading from API
 import java.net.http.HttpClient;
@@ -12,7 +12,6 @@ import java.util.List;
 
 import Config.ProjectConfig;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class APIClass {
 
@@ -57,11 +56,13 @@ public class APIClass {
         return null;
     }
 
-    public int numResults(){
-        JSONArray animalsArray = new JSONArray(responseBody);
-        //return animalsArray.length();
-        if (animalsArray == null)
+    public int numResults() {
+        final JSONArray animalsArray = new JSONArray(responseBody);
+
+        // return animalsArray.length()
+        if (animalsArray == null) {
             return 0;
+        }
         return animalsArray.length();
     }
 }
