@@ -1,8 +1,8 @@
 package Classes.Settings;
 
-import java.awt.Color;
-
 import static Classes.Settings.SettingConstants.*;
+
+import java.awt.Color;
 
 /**
  * Interactor implementing {@link TextSettingInputBoundary}.
@@ -10,14 +10,7 @@ import static Classes.Settings.SettingConstants.*;
  */
 public class TextSettingInteractor implements TextSettingInputBoundary {
 
-    /**
-     * Data access object for loading and saving text settings.
-     */
     private final TextSettingGateway settingFetcher;
-
-    /**
-     * The current text setting configuration.
-     */
     private final TextSetting config;
 
     /**

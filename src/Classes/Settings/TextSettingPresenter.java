@@ -4,8 +4,6 @@ import static Classes.Settings.SettingConstants.*;
 
 import java.awt.Color;
 
-
-
 /**
  * Presenter for {@link TextSettingOutput} that implements {@link TextSettingOutputBoundary}.
  */
