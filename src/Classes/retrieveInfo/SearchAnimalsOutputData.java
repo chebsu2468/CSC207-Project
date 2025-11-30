@@ -1,5 +1,4 @@
 package Classes.retrieveInfo;
-import Classes.retrieveInfo.Animal;
 
 public class SearchAnimalsOutputData {
     public final boolean success;

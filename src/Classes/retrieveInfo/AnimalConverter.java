@@ -87,7 +87,7 @@ public final class AnimalConverter {
             if ((c >= '0' && c <= '9') || c == '.') { b.append(c); seen = true; }
             else if (seen) break;
         }
-        try { return b.length() == 0 ? 0 : Double.parseDouble(b.toString()); }
+        try { return b.isEmpty() ? 0 : Double.parseDouble(b.toString()); }
         catch (NumberFormatException ex) { return 0; }
     }
 }

@@ -1,9 +1,5 @@
 package Classes.retrieveInfo;
 
-import Classes.retrieveInfo.AnimalDataSource;
-import Classes.retrieveInfo.Animal;
-import Classes.retrieveInfo.AnimalFactory;
-import Classes.retrieveInfo.SearchAnimalsPresenter;
 import Classes.Filter.FuzzySearch.FuzzySearchProvider;
 import java.io.IOException;
 

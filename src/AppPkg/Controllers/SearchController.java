@@ -27,10 +27,6 @@ public class SearchController {
         this.factory = factory != null ? factory : new AnimalFactory();
     }
 
-    /**
-     * Perform the search. Returns a SearchResult describing the outcome.
-     * This mirrors the logic that previously lived inside MainMenu.btnSearchActionPerformed.
-     */
     public SearchResult search(String rawQuery) {
         if (rawQuery == null) rawQuery = "";
         String animalName = rawQuery.toLowerCase().trim();

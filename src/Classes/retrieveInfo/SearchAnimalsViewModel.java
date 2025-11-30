@@ -1,7 +1,5 @@
 package Classes.retrieveInfo;
 
-import Classes.retrieveInfo.Animal;
-
 public class SearchAnimalsViewModel {
     public boolean success;
     public String message;

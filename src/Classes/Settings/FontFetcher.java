@@ -21,8 +21,7 @@ public class FontFetcher {
      */
     public String[] getFonts() {
 
-        String[] list = this.availableFont.toArray(new String[availableFont.size()]);
-        return list;
+        return this.availableFont.toArray(new String[availableFont.size()]);
     }
 
 }

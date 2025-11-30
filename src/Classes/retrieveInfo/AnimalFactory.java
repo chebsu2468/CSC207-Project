@@ -15,7 +15,7 @@ public final class AnimalFactory {
             throw new IllegalArgumentException("Empty JSON for Animal");
         }
         JSONArray arr = new JSONArray(jsonArrayString);
-        if (arr.length() == 0) throw new IllegalArgumentException("Empty JSON array");
+        if (arr.isEmpty()) throw new IllegalArgumentException("Empty JSON array");
         JSONObject a = arr.getJSONObject(0);
         JSONObject characteristics = a.optJSONObject("characteristics");
         JSONObject taxonomy = a.optJSONObject("taxonomy");

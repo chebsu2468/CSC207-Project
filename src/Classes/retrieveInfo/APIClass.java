@@ -58,7 +58,8 @@ public class APIClass {
 
     public int numResults() {
         final JSONArray animalsArray = new JSONArray(responseBody);
-        // return animalsArray.length();
+
+        // return animalsArray.length()
         if (animalsArray == null) {
             return 0;
         }

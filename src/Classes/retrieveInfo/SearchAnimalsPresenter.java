@@ -1,8 +1,5 @@
 package Classes.retrieveInfo;
 
-import Classes.retrieveInfo.SearchAnimalsOutputBoundary;
-import Classes.retrieveInfo.SearchAnimalsOutputData;
-
 public class SearchAnimalsPresenter implements SearchAnimalsOutputBoundary {
     private final SearchAnimalsViewModel viewModel;
 

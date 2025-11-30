@@ -1,6 +1,6 @@
 package Classes.GenerateTradingCard;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 
 /**
  * Handles trading card generation.
