@@ -3,7 +3,7 @@
  */
 package Classes.Filter;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 import java.util.List;
 
 

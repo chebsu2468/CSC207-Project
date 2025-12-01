@@ -1,6 +1,6 @@
 package Classes.Compatibility.usecases;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 
 /**
  * Data Access for animal comparison use case.

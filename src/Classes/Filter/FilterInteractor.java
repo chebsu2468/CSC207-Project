@@ -4,8 +4,9 @@
  */
 package Classes.Filter;
 
-import Classes.APIClass;
-import Classes.Animal;
+import Classes.retrieveInfo.APIClass;
+import Classes.retrieveInfo.Animal;
+import Classes.retrieveInfo.AnimalFactory;
 
 import java.util.*;
 
@@ -15,6 +16,7 @@ public class FilterInteractor implements FilterInputBoundary {
     private final AnimalNamesProviderI nameProviderObj;
     private final FilterOutputBoundary outputBoundary;
     private final APIClass animalProviderObj;
+    private final AnimalFactory factory;
 
     //specifically for caching logic
     private List<String> cachedCandidates = new ArrayList<>();
@@ -28,6 +30,7 @@ public class FilterInteractor implements FilterInputBoundary {
         this.nameProviderObj = nameProviderObj;
         this.outputBoundary = outputBoundary;
         this.animalProviderObj = animalProviderObj;
+        this.factory = new AnimalFactory();
     }
 
     /*
@@ -139,7 +142,7 @@ public class FilterInteractor implements FilterInputBoundary {
             System.out.println("Data received for: " + candidate);
 
             try {
-                Animal a = new Animal(data);
+                Animal a = factory.fromJsonArrayString(data);
                 if (matchesFilters(a, input)) {
                     System.out.println("It matched my filter: " + a.getName());
                     filterResults.add(a);

@@ -2,24 +2,26 @@ package Classes.Settings;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FontFetcher {
-    private ArrayList<String> availableFont;
+    private final ArrayList<String> availableFont;
 
     public FontFetcher() {
         this.availableFont = new ArrayList<>();
         GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String[] fontFamilies = g.getAvailableFontFamilyNames();
 
-        for (String font : fontFamilies) {
-            availableFont.add(font);
-        }
+        Collections.addAll(availableFont, fontFamilies);
     }
 
-
+    /**
+     * Returns a list of font retrieved from local environment.
+     * @return str[]
+     */
     public String[] getFonts() {
-        String[] list = this.availableFont.toArray(new String[availableFont.size()]);
-        return list;
+
+        return this.availableFont.toArray(new String[availableFont.size()]);
     }
 
 }

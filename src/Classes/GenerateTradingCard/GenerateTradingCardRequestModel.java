@@ -1,6 +1,6 @@
 package Classes.GenerateTradingCard;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 
 public class GenerateTradingCardRequestModel {
     private final Animal animal;

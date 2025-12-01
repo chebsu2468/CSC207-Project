@@ -1,21 +1,20 @@
 package AppPkg;
 
-import Classes.Animal;
-import Classes.Settings.TextSettingInteractor;
-import Classes.Settings.TextSettingOutput;
+import Classes.retrieveInfo.Animal;
 
 import javax.swing.*;
 
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+
 public class MultiSuccesfulSearch extends javax.swing.JFrame
 {
-    private final TextSettingInteractor config = new TextSettingInteractor("settings.csv");
-    private final TextSettingOutput textSettingOutput = new TextSettingOutput(config);
+    private final UIManager config = new UIManager(DEFAULT_SETTINGS_FILE);
 
     public MultiSuccesfulSearch(Animal[] animals)
     {
         initComponents();
 
-        // Popultes the JList
+        // Populates the JList
         DefaultListModel<String> model = new DefaultListModel<>();
         for (Animal a : animals) {
             model.addElement(a.getName());
@@ -37,13 +36,12 @@ public class MultiSuccesfulSearch extends javax.swing.JFrame
                 }
             }
         });
-        this.textSettingOutput.updateALL(this);
+        config.updateALL(this);
     }
 
     public MultiSuccesfulSearch()
     {
         initComponents();
-        JOptionPane.showMessageDialog(null, "Search Successful");
     }
 
     @SuppressWarnings("unchecked")
