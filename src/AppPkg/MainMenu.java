@@ -4,6 +4,10 @@ import Classes.APIClass;
 import Classes.Animal;
 import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
 import Classes.Filter.FuzzySearch.FuzzySearchProvider;
+import Classes.ViewSavedCards.FileSystemLoadSavedCardsDataAccess;
+import Classes.ViewSavedCards.LoadSavedCardsController;
+import Classes.ViewSavedCards.LoadSavedCardsInteractor;
+import Classes.ViewSavedCards.LoadSavedCardsPresenter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,6 +49,7 @@ public class  MainMenu extends javax.swing.JFrame
         btnCompatibility = new javax.swing.JButton();
         btnFavorites = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
+        btnMyCards = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Main Menu");
@@ -96,6 +101,9 @@ public class  MainMenu extends javax.swing.JFrame
                 btnCompatibilityActionPerformed(evt);
             }
         });
+        btnMyCards.setText("View My Saved Cards");
+        btnMyCards.addActionListener(evt -> openSavedCardsLibrary());
+
 
         btnFavorites.setText("View Favourites");
         btnFavorites.addActionListener(new java.awt.event.ActionListener()
@@ -124,7 +132,8 @@ public class  MainMenu extends javax.swing.JFrame
                         .addGap(55, 55, 55)
                         .addComponent(lblQuestion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                        .addComponent(txfAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMyCards)
+                            .addComponent(txfAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -163,6 +172,7 @@ public class  MainMenu extends javax.swing.JFrame
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCompatibility)
+                        .addComponent(btnMyCards)
                     .addComponent(btnFavorites))
                 .addGap(30, 30, 30))
         );
@@ -170,6 +180,19 @@ public class  MainMenu extends javax.swing.JFrame
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void openSavedCardsLibrary() {
+        var controller = new LoadSavedCardsController(
+                new LoadSavedCardsInteractor(
+                        new FileSystemLoadSavedCardsDataAccess(),
+                        new LoadSavedCardsPresenter()
+                )
+        );
+
+        var response = controller.load();
+        new SavedCardScreen(response).setVisible(true);
+        this.dispose();
+    }
 
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSettingsActionPerformed
     {//GEN-HEADEREND:event_btnSettingsActionPerformed
@@ -293,6 +316,7 @@ public class  MainMenu extends javax.swing.JFrame
     private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSettings;
+    private javax.swing.JButton btnMyCards;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblGreeting1;
     private javax.swing.JLabel lblGreeting2;
