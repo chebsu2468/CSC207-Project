@@ -1,15 +1,9 @@
 package AppPkg;
-
 import AppPkg.Controllers.SearchController;
 import AppPkg.Controllers.SearchResult;
-import Classes.retrieveInfo.APIClass;
 import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
 import Classes.Filter.FuzzySearch.FuzzySearchProvider;
-import Classes.Settings.TextSettingInteractor;
-import Classes.Settings.TextSettingOutput;
-import Classes.retrieveInfo.AnimalFactory;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import Classes.retrieveInfo.*;
 
 import java.awt.*;
 

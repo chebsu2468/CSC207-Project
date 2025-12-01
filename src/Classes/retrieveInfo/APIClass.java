@@ -1,68 +1,95 @@
 package Classes.retrieveInfo;
 
-// Required imports for reading from API
+import java.io.IOException;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.URI;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import Config.ProjectConfig;
 import org.json.JSONArray;
+
+import Config.ProjectConfig;
 
 public class APIClass {
 
-    public static final String API_URL = ProjectConfig.NINJA_API_URL; //final because we do not want these two variable values to change
+    public static final String API_URL = ProjectConfig.NINJA_API_URL;
     private static final String API_KEY = ProjectConfig.getNinjaApiKey();
 
     private List<String> searchedAnimals;
     private String responseBody;
 
     public APIClass() {
-        searchedAnimals = new ArrayList<>(); // do not need any code in this, for now. Just used to instantiate the class.
+        searchedAnimals = new ArrayList<>();
         responseBody = "";
     }
 
-    public String getAnimalData(String animalName) {
-        try{
-            System.out.println("this is the animal name i received: "+ animalName);
-            HttpClient client = HttpClient.newHttpClient();
-            animalName = animalName.replace(" ", "%20");
-            HttpRequest request = HttpRequest.newBuilder(URI.create(API_URL + animalName)).header("X-Api-Key", API_KEY).build();
+    /**
+     * Fetches animal data from the API for the given animal name.
+     *
+     * @param animalName the name of the animal to search
+     * @return the JSON response as a String, or null if empty or on error
+     */
+    public String getAnimalData(final String animalName) {
+        String responseBodyLocal = null;
+        final boolean isValidName = animalName != null && !animalName.isBlank();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (isValidName) {
+            final String encodedName = animalName.replace(" ", "%20");
 
-            if (response.statusCode() == 200) {
-                responseBody = response.body();
-                //needed this check for filter logic
-                if (responseBody == null || responseBody.trim().isEmpty() || responseBody.equals("[]")) {
-                    System.err.println("API returned empty data for: " + animalName);
-                    return null; // Return null instead of empty array
+            try {
+                final HttpClient client = HttpClient.newHttpClient();
+                final HttpRequest request = HttpRequest.newBuilder(URI.create(API_URL + encodedName))
+                        .header("X-Api-Key", API_KEY)
+                        .GET()
+                        .build();
+
+                final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                final int successStatus = 200;
+                if (response.statusCode() == successStatus) {
+                    responseBodyLocal = response.body();
+
+                    final String emptyJsonArray = "[]";
+                    if (responseBodyLocal == null || responseBodyLocal.isBlank()
+                            || emptyJsonArray.equals(responseBodyLocal)) {
+                        System.err.println("API returned empty data for: " + animalName);
+                        responseBodyLocal = null;
+                    }
+                    else {
+                        searchedAnimals.add(responseBodyLocal);
+                        System.out.println("Received data from API for: " + animalName + " -> " + responseBodyLocal);
+                    }
                 }
-                searchedAnimals.add(responseBody);
-                System.out.println("I did get something with the ninja api and this is what: " + responseBody);
-                return responseBody;
-            } else {
-                //return "Error"; // need a better way to show there's an error that the GUI can use
-                System.out.println("API Error: " + response.statusCode() + " for: " + animalName);
-                return null; // Return null for errors
+                else {
+                    System.out.println("API Error: " + response.statusCode() + " for: " + animalName);
+                    responseBodyLocal = null;
+                }
+
             }
-        } catch(IOException | InterruptedException e){
-            e.printStackTrace();
+            catch (IOException | InterruptedException ex) {
+                ex.printStackTrace();
+            }
         }
-        return null;
+
+        return responseBodyLocal;
     }
 
+    /**
+     * Returns the number of animal results in the current response body.
+     *
+     * @return the number of results, or 0 if the response body is null or empty
+     */
     public int numResults() {
-        final JSONArray animalsArray = new JSONArray(responseBody);
+        int result = 0;
 
-        // return animalsArray.length()
-        if (animalsArray == null) {
-            return 0;
+        if (responseBody != null && !responseBody.isBlank()) {
+            final JSONArray animalsArray = new JSONArray(responseBody);
+            result = animalsArray.length();
         }
-        return animalsArray.length();
+
+        return result;
     }
+
 }
