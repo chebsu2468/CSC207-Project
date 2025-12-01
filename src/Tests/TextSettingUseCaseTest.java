@@ -1,11 +1,11 @@
 package Tests;
 
-import apppkg.UIManager;
-import classes.Settings.*;
+import AppPkg.UIManager;
+import Classes.Settings.*;
 import org.junit.jupiter.api.*;
 
-import static classes.Settings.SettingConstants.DEFAULT_FONT_SIZE;
-import static classes.Settings.SettingConstants.FONT_SIZE_TWO;
+import static Classes.Settings.SettingConstants.DEFAULT_FONT_SIZE;
+import static Classes.Settings.SettingConstants.FONT_SIZE_TWO;
 import static org.junit.jupiter.api.Assertions.*;
 
 import javax.swing.*;
