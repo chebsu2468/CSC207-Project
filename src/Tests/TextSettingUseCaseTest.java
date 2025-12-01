@@ -1,88 +1,142 @@
 package Tests;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import AppPkg.UIManager;
-import Classes.Settings.*;
-import org.junit.jupiter.api.*;
+import Classes.Settings.FontFetcher;
+import Classes.Settings.SettingConstants;
+import Classes.Settings.TextSetting;
+import Classes.Settings.TextSettingController;
+import Classes.Settings.TextSettingDataAccess;
 
-import static Classes.Settings.SettingConstants.DEFAULT_FONT_SIZE;
-import static Classes.Settings.SettingConstants.FONT_SIZE_TWO;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.FlowLayout;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 
 /**
- * High-level integration tests for the Text Setting use case.
- * Ensures: Controller → Interactor → DataAccess → Presenter → UIManager → UI Frame
+ * Integration tests for the Text Setting use case.
+ * Verifies the full flow:
+ * Controller → Interactor → DataAccess → Presenter → UIManager → UI Frame.
  */
 public class TextSettingUseCaseTest {
 
+    /**
+     * Resets the test data file before each run.
+     */
     @BeforeEach
     void setup() {
-        // Make sure test settings file is reset
-        TextSettingDataAccess data = new TextSettingDataAccess("TestSettings.csv");
-        data.save(new TextSetting(12, Color.BLACK,"Arial" ));
+        final TextSettingDataAccess data =
+                new TextSettingDataAccess(SettingConstants.TEST_SETTINGS_FILE);
+
+        data.save(new TextSetting(
+                SettingConstants.DEFAULT_FONT_SIZE,
+                SettingConstants.DEFAULT_COLOR,
+                SettingConstants.DEFAULT_FONT_NAME
+        ));
     }
 
     /**
-     * Tests full main flow:
-     * Controller.updateSettings(...) → saved → UIManager.updateALL(...)
+     * Tests the main flow:
+     * Controller.updateSettings → values saved →
+     * UIManager.updateALL → UI components reflect new settings.
      */
     @Test
-    void testMainFlow_TextSettingsAppliedToFrame() {
+    void testMainFlowTextSettingsAppliedToFrame() {
 
-        TextSettingController controller = new TextSettingController("TestSettings.csv");
-        UIManager uiManager = new UIManager("TestSettings.csv");
+        final TextSettingController controller =
+                new TextSettingController(SettingConstants.TEST_SETTINGS_FILE);
 
-        String[] availableFonts = new FontFetcher().getFonts();
+        final UIManager uiManager =
+                new UIManager(SettingConstants.TEST_SETTINGS_FILE);
 
-        // Create UI container
-        JFrame frame = new JFrame();
+        final String[] availableFonts = new FontFetcher().getFonts();
+
+        // Build UI
+        final JFrame frame = new JFrame();
         frame.setLayout(new FlowLayout());
-        JLabel l1 = new JLabel("Hello");
-        JLabel l2 = new JLabel("Humans");
 
-        frame.add(l1);
-        frame.add(l2);
+        final JLabel label1 = new JLabel("Hello");
+        final JLabel label2 = new JLabel("Humans");
 
-        // Initial update (should be default Arial, black)
+        frame.add(label1);
+        frame.add(label2);
+
+        // Initial update (defaults)
         uiManager.updateALL(frame);
 
-        assertEquals("Arial", l1.getFont().getName());
-        assertEquals(Color.BLACK, l1.getForeground());
+        assertEquals(
+                SettingConstants.DEFAULT_FONT_NAME,
+                label1.getFont().getName()
+        );
+        assertEquals(
+                SettingConstants.DEFAULT_COLOR,
+                label1.getForeground()
+        );
 
-        // Apply new settings
-        controller.updateSettings("purple", 2, availableFonts[0]);
+        // Apply new settings: purple, size TWO, first font name
+        controller.updateSettings(
+                SettingConstants.NAME_PURPLE,
+                SettingConstants.TWO,
+                availableFonts[0]
+        );
+
         uiManager.updateALL(frame);
 
-        // Now labels should reflect new style
-        assertEquals(availableFonts[0], l1.getFont().getName());
-        assertEquals(FONT_SIZE_TWO , l1.getFont().getSize());
+        // UI should update
+        final Font updatedFont = label1.getFont();
 
-        // Purple mapped by your UIManager
-        assertEquals(new Color(70, 20, 124), l1.getForeground());
+        assertEquals(availableFonts[0], updatedFont.getName());
+        assertEquals(SettingConstants.FONT_SIZE_TWO, updatedFont.getSize());
+        assertEquals(SettingConstants.PURPLE, label1.getForeground());
     }
 
-
+    /**
+     * Tests alternative/exception flow:
+     * Invalid input should cause fallback to default settings.
+     */
     @Test
-    void testAlternativeFlow_InvalidColorGracefullyHandled() {
-        TextSettingController controller = new TextSettingController("TestSettings.csv");
-        UIManager uiManager = new UIManager("TestSettings.csv");
+    void testAlternativeFlow() {
 
-        JFrame frame = new JFrame();
-        JLabel label = new JLabel("Test");
+        final TextSettingController controller =
+                new TextSettingController(SettingConstants.TEST_SETTINGS_FILE);
+
+        final UIManager uiManager =
+                new UIManager(SettingConstants.TEST_SETTINGS_FILE);
+
+        final JFrame frame = new JFrame();
+        final JLabel label = new JLabel("Test");
+
         frame.add(label);
 
-        // Try using invalid color
-        controller.updateSettings("NOT_A_COLOR", 10, "Arial");
+        // Invalid color + invalid size → fallback to defaults
+        controller.updateSettings(
+                "NOT_A_COLOR",
+                1,
+                SettingConstants.DEFAULT_FONT_NAME
+        );
 
-        // Should fall back to black or default
         uiManager.updateALL(frame);
 
-        assertEquals("Arial", label.getFont().getName());
-        assertEquals(DEFAULT_FONT_SIZE, label.getFont().getSize());
+        final Font font = label.getFont();
+        final Color color = label.getForeground();
 
-        // Should revert to default color
-        assertEquals(Color.BLACK, label.getForeground());
+        assertEquals(
+                SettingConstants.DEFAULT_FONT_NAME,
+                font.getName()
+        );
+        assertEquals(
+                SettingConstants.DEFAULT_FONT_SIZE,
+                font.getSize()
+        );
+        assertEquals(
+                SettingConstants.DEFAULT_COLOR,
+                color
+        );
     }
 }
