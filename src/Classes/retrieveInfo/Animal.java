@@ -1,11 +1,12 @@
 package Classes.retrieveInfo;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public final class Animal {
     private final String name;
-    private final Map<String,String> taxonomy;
+    private final Map<String, String> taxonomy;
     private final String habitat;
     private final String[] locations;
     private final String[] prey;
@@ -17,10 +18,11 @@ public final class Animal {
     private final double heightCm;
     private final String group;
     private final String type;
+    private final String na = "N/A";
 
     public Animal(
             String name,
-            Map<String,String> taxonomy,
+            Map<String, String> taxonomy,
             String habitat,
             String[] locations,
             String[] prey,
@@ -36,8 +38,8 @@ public final class Animal {
         this.name = name;
         this.taxonomy = taxonomy;
         this.habitat = habitat;
-        this.locations = locations == null ? new String[0] : locations;
-        this.prey = prey == null ? new String[0] : prey;
+        this.locations = Objects.requireNonNullElseGet(locations, () -> new String[0]);
+        this.prey = Objects.requireNonNullElseGet(prey, () -> new String[0]);
         this.mostDistinctiveFeature = mostDistinctiveFeature;
         this.lifespanYears = lifespanYears;
         this.diet = diet;
@@ -52,7 +54,7 @@ public final class Animal {
         return name;
     }
 
-    public Map<String,String> getTaxonomy() {
+    public Map<String, String> getTaxonomy() {
         return taxonomy;
     }
 
@@ -102,7 +104,7 @@ public final class Animal {
 
     @Override
     public String toString() {
-        StringJoiner sj = new StringJoiner("\n");
+        final StringJoiner sj = new StringJoiner("\n");
         sj.add("Name: " + safe(name));
         sj.add("Taxonomy: " + formatTaxonomy());
         sj.add("Habitat: " + safe(habitat));
@@ -119,26 +121,48 @@ public final class Animal {
         return sj.toString();
     }
 
-    private String safe(String s) { return (s == null || s.isEmpty()) ? "N/A" : s; }
+    private String safe(String parameter) {
+        String result = parameter;
+        if (parameter == null || parameter.isEmpty()) {
+            result = na;
+        }
+        return result;
+    }
 
-    private String joinArray(String[] arr){
-        if (arr == null || arr.length == 0) return "N/A";
-        StringJoiner j = new StringJoiner(", ");
-        for (String x : arr) j.add(x);
-        return j.toString();
+    private String joinArray(String[] arr) {
+        String result = na;
+
+        if (arr != null && arr.length > 0) {
+            final StringJoiner joiner = new StringJoiner(", ");
+            for (String x : arr) {
+                joiner.add(x);
+            }
+            result = joiner.toString();
+        }
+        return result;
     }
 
     private String formatTaxonomy() {
-        if (taxonomy == null || taxonomy.isEmpty()) return "N/A";
-        StringJoiner j = new StringJoiner(", ");
-        for (Map.Entry<String,String> e : taxonomy.entrySet()) {
-            j.add(cap(e.getKey()) + ": " + safe(e.getValue()));
+        String result = na;
+
+        if (taxonomy != null && !taxonomy.isEmpty()) {
+            final StringJoiner joiner = new StringJoiner(", ");
+            for (Map.Entry<String, String> entry : taxonomy.entrySet()) {
+                joiner.add(capitalize(entry.getKey()) + ": " + safe(entry.getValue()));
+            }
+            result = joiner.toString();
         }
-        return j.toString();
+
+        return result;
     }
 
-    private String cap(String s){
-        if (s == null || s.isEmpty()) return s;
-        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+    private String capitalize(String str) {
+        String result = str;
+
+        if (str != null && !str.isEmpty()) {
+            result = Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        }
+
+        return result;
     }
 }

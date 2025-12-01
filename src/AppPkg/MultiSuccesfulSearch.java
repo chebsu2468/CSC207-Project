@@ -1,8 +1,6 @@
 package AppPkg;
 
 import Classes.retrieveInfo.Animal;
-import Classes.Settings.TextSettingInteractor;
-import Classes.Settings.TextSettingOutput;
 
 import javax.swing.*;
 
@@ -44,7 +42,6 @@ public class MultiSuccesfulSearch extends javax.swing.JFrame
     public MultiSuccesfulSearch()
     {
         initComponents();
-        JOptionPane.showMessageDialog(null, "Search Successful");
     }
 
     @SuppressWarnings("unchecked")

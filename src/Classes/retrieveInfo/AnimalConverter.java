@@ -2,92 +2,219 @@ package Classes.retrieveInfo;
 
 public final class AnimalConverter {
 
-    public double parseAverageLifespanYears(String s) {
-        if (s == null || s.trim().isEmpty()) return 0;
-        String in = s.toLowerCase().replaceAll("[()]", "").trim();
+    private static final String PARENS_REGEX = "[()]";
+
+    /**
+     * Parses a lifespan string and returns the average lifespan in years.
+     *
+     * @param age the lifespan string (e.g., "2-4 years", "up to 5 yrs")
+     * @return the average lifespan in years, or 0 if unable to parse
+     */
+    public double parseAverageLifespanYears(final String age) {
+        double result = 0.0;
+
+        if (age != null && !age.trim().isEmpty()) {
+            final String normalized = normalizeAgeString(age);
+
+            if (normalized.startsWith("up to ")) {
+                result = parseUpToValue(normalized);
+            }
+            else {
+                result = parseRangeOrSingle(normalized);
+            }
+        }
+
+        return result;
+    }
+
+    private String normalizeAgeString(final String age) {
+        String in = age.toLowerCase().replaceAll(PARENS_REGEX, "").trim();
         in = in.replaceAll("years?", "year").replaceAll("yrs?", "year");
+        return in;
+    }
 
-        if (in.startsWith("up to ")) {
-            return valueWithUnitToYears(in.substring(6).trim());
-        }
-        String[] parts = splitRange(in);
+    private double parseUpToValue(final String input) {
+        final String valuePart = input.substring(AnimalConstants.UP_TO_PREFIX_LENGTH).trim();
+        return valueWithUnitToYears(valuePart);
+    }
+
+    private double parseRangeOrSingle(final String input) {
+        final double result;
+
+        final String[] parts = splitRange(input);
         if (parts.length == 2) {
-            double low = valueWithUnitToYears(parts[0]);
-            double high = valueWithUnitToYears(parts[1]);
-            if (low == 0) low = high;
-            if (high == 0) high = low;
-            return (low + high) / 2.0;
+            result = averageTwoValues(parts[0], parts[1]);
         }
-        return valueWithUnitToYears(in);
+        else {
+            result = valueWithUnitToYears(input);
+        }
+
+        return result;
     }
 
-    public double parseAverageWeightKg(String s) {
-        // Simplified: handles "10 kg", "22 lbs", "10-20 kg", "up to 5 kg"
-        if (s == null || s.trim().isEmpty()) return 0;
-        String in = s.toLowerCase().replaceAll("[()]", "").trim();
-        String[] parts = splitRange(in);
-        return parts.length == 2 ? (valueWithUnitToKg(parts[0]) + valueWithUnitToKg(parts[1])) / 2.0
-                : valueWithUnitToKg(in);
+    private double averageTwoValues(final String part1, final String part2) {
+        double low = valueWithUnitToYears(part1);
+        double high = valueWithUnitToYears(part2);
+
+        if (low == 0) {
+            low = high;
+        }
+        if (high == 0) {
+            high = low;
+        }
+        return (low + high) / 2.0;
     }
 
-    public double parseAverageHeightCm(String s) {
-        if (s == null || s.trim().isEmpty()) return 0;
-        String in = s.toLowerCase().replaceAll("[()]", "").trim();
-        String[] parts = splitRange(in);
-        return parts.length == 2 ? (toCm(parts[0]) + toCm(parts[1])) / 2.0 : toCm(in);
+    /**
+     * Parses a weight string and returns the average weight in kilograms.
+     * Supports ranges (e.g., "10-20 kg"), "up to" values, and various units.
+     *
+     * @param weight the weight string
+     * @return the average weight in kilograms, or 0 if input is null/empty
+     */
+    public double parseAverageWeightKg(String weight) {
+        double result = 0;
+
+        if (weight != null && !weight.trim().isEmpty()) {
+            final String in = weight.toLowerCase().replaceAll(PARENS_REGEX, "").trim();
+            final String[] parts = splitRange(in);
+
+            if (parts.length == 2) {
+                final double low = valueWithUnitToKg(parts[0]);
+                final double high = valueWithUnitToKg(parts[1]);
+                result = (low + high) / 2.0;
+            }
+            else {
+                result = valueWithUnitToKg(in);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Parses a height string and returns the average height in centimeters.
+     * Supports ranges (e.g., "150-170 cm") and single values.
+     *
+     * @param height the height string
+     * @return the average height in centimeters, or 0 if input is null/empty
+     */
+    public double parseAverageHeightCm(String height) {
+        double result = 0;
+
+        if (height != null && !height.trim().isEmpty()) {
+            final String in = height.toLowerCase().replaceAll(PARENS_REGEX, "").trim();
+            final String[] parts = splitRange(in);
+
+            if (parts.length == 2) {
+                result = (toCm(parts[0]) + toCm(parts[1])) / 2.0;
+            }
+            else {
+                result = toCm(in);
+            }
+        }
+
+        return result;
     }
 
     // helpers
-    private String[] splitRange(String s) {
-        if (s.contains("-")) return s.split("-");
-        if (s.contains("to")) return s.split("to");
-        return new String[]{s};
+    private String[] splitRange(String string) {
+        String[] result = {string};
+
+        if (string.contains("-")) {
+            result = string.split("-");
+        }
+        else if (string.contains("to")) {
+            result = string.split("to");
+        }
+
+        return result;
     }
 
     private double valueWithUnitToYears(String token) {
-        token = token.trim();
-        double num = extractNumber(token);
-        if (token.contains("month")) return num / 12.0;
-        if (token.contains("week")) return num / 52.0;
-        if (token.contains("day")) return num / 365.0;
-        return num;
+        double result = extractNumber(token.trim());
+
+        if (token.contains("month")) {
+            result /= AnimalConstants.MONTHS_IN_YEAR;
+        }
+        else if (token.contains("week")) {
+            result /= AnimalConstants.WEEKS_IN_YEAR;
+        }
+        else if (token.contains("day")) {
+            result /= AnimalConstants.DAYS_IN_YEAR;
+        }
+
+        return result;
     }
 
     private double valueWithUnitToKg(String token) {
-        token = token.trim();
-        double num = extractNumber(token);
-        if (token.contains("lb") || token.contains("lbs") || token.contains("pound")) return num * 0.45359237;
-        if (token.contains("g") && !token.contains("kg")) return num / 1000.0;
-        return num; // assume kg
+        double result = extractNumber(token.trim());
+
+        if (token.contains("lb") || token.contains("lbs") || token.contains("pound")) {
+            result *= AnimalConstants.LB_TO_KG;
+        }
+        else if (token.contains("g") && !token.contains("kg")) {
+            result /= AnimalConstants.GRAMS_IN_KG;
+        }
+
+        return result;
     }
 
     private double toCm(String token) {
-        token = token.trim();
-        double num = extractNumber(token);
-        if (token.contains("cm")) return num;
-        if (token.contains("m")) return num * 100.0;
-        if (token.contains("mm")) return num / 10.0;
-        // imperial like "ft" or "in"
-        if (token.contains("ft") || token.contains("'")) {
-            String[] parts = token.replace("\"","").replace("'", " ").split("\\s+");
-            try {
-                double feet = Double.parseDouble(parts[0]);
-                double inches = parts.length > 1 ? Double.parseDouble(parts[1]) : 0;
-                return feet * 30.48 + inches * 2.54;
-            } catch (Exception e) { return num * 30.48; }
+        double result = extractNumber(token.trim());
+
+        try {
+            if (token.contains("mm")) {
+                result /= AnimalConstants.MM_TO_CM;
+            }
+            else if (token.contains("m")) {
+                result *= AnimalConstants.M_TO_CM;
+            }
+            else if (token.contains("ft") || token.contains("'")) {
+                final String[] parts = token.replace("\"", "").replace("'", " ").split("\\s+");
+                final double feet = Double.parseDouble(parts[0]);
+                double inches = 0;
+                if (parts.length > 1) {
+                    inches = Double.parseDouble(parts[1]);
+                }
+                result = feet * AnimalConstants.FEET_TO_CM + inches * AnimalConstants.INCH_TO_CM;
+            }
+            else if (token.contains("in") || token.contains("\"")) {
+                result *= AnimalConstants.INCH_TO_CM;
+            }
         }
-        if (token.contains("in") || token.contains("\"")) return num * 2.54;
-        return num; // fallback
+        catch (NumberFormatException error) {
+            //
+        }
+
+        return result;
     }
 
-    private double extractNumber(String s) {
-        StringBuilder b = new StringBuilder();
+    private double extractNumber(String string) {
+        double result = 0;
+        final StringBuilder b = new StringBuilder();
         boolean seen = false;
-        for (char c : s.toCharArray()) {
-            if ((c >= '0' && c <= '9') || c == '.') { b.append(c); seen = true; }
-            else if (seen) break;
+
+        for (char c : string.toCharArray()) {
+            if (c >= '0' && c <= '9' || c == '.') {
+                b.append(c);
+                seen = true;
+            }
+            else if (seen) {
+                break;
+            }
         }
-        try { return b.isEmpty() ? 0 : Double.parseDouble(b.toString()); }
-        catch (NumberFormatException ex) { return 0; }
+
+        if (!b.isEmpty()) {
+            try {
+                result = Double.parseDouble(b.toString());
+            }
+            catch (NumberFormatException ex) {
+                result = 0;
+            }
+        }
+
+        return result;
     }
+
 }
