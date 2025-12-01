@@ -1,8 +1,10 @@
 package AppPkg;
 
-import Classes.Animal;
-import Classes.APIClass;
+import Classes.retrieveInfo.Animal;
+import Classes.retrieveInfo.APIClass;
+import Classes.Settings.*;
 import Classes.add_favorite.*;
+import Classes.retrieveInfo.AnimalFactory;
 
 import javax.swing.*;
 
@@ -10,10 +12,12 @@ import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
 
 public class Favorites extends javax.swing.JFrame
 {
+    private final AnimalFactory factory;
     private final UIManager config = new UIManager(DEFAULT_SETTINGS_FILE);
 
     public Favorites()
     {
+        this.factory = new AnimalFactory();
         initComponents();
         config.updateALL(this);
     }
@@ -106,9 +110,6 @@ public class Favorites extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
-    /**
-     * User double-click on the name to get the information.
-     */
     private void btnMouseClickActionPerformed(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2) {
             String animalName = jListFavs.getSelectedValue().toLowerCase().trim();
@@ -116,15 +117,14 @@ public class Favorites extends javax.swing.JFrame
                 animalName = animalName.replace(" ", "%20");
             }
             APIClass apiClass = new APIClass();
-            Animal animal = new Animal(apiClass.getAnimalData(animalName));
+            String jsonResponse = apiClass.getAnimalData(animalName);
+
+            Animal animal = factory.fromJsonArrayString(jsonResponse);
             new SuccesfulSearch(animal).setVisible(true);
             this.dispose();
         }
     }
 
-    /**
-     * User clicks on the name first, then clicks remove to remove the name.
-     */
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {
         final AddFavoriteInputBoundary addFavoriteInteractor = new AddFavoriteInteractor(favoritesDataAccessObject);
         AddFavoriteController addFavoriteController = new AddFavoriteController(addFavoriteInteractor);

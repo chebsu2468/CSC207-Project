@@ -6,8 +6,9 @@
 
 package Tests;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 import Classes.Compatibility.usecases.*;
+import Classes.retrieveInfo.AnimalFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -145,7 +146,7 @@ public class CompareAnimalsInteractorTest {
                 }
             }]
             """;
-        return new Animal(lionJson);
+        return new AnimalFactory().fromJsonArrayString(lionJson);
     }
 
     private Animal createTiger() {
@@ -175,7 +176,7 @@ public class CompareAnimalsInteractorTest {
                 }
             }]
             """;
-        return new Animal(tigerJson);
+        return new AnimalFactory().fromJsonArrayString(tigerJson);
     }
 
     private class TestDataAccess implements AnimalDataAccessInterface {

@@ -1,8 +1,8 @@
 package Classes.GenerateTradingCard;
 
+import Classes.retrieveInfo.Animal;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import Classes.Animal;
 
 public class GenerateTradingCardInteractor implements GenerateTradingCardInputBoundary {
 

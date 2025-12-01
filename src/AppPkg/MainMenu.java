@@ -1,7 +1,10 @@
 package AppPkg;
 
-import Classes.APIClass;
-import Classes.Animal;
+// Standard Java packages
+import java.awt.Cursor;
+import java.awt.Font;
+
+// Project imports - Classes package
 import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
 import Classes.Filter.FuzzySearch.FuzzySearchProvider;
 import Classes.ViewSavedCards.FileSystemLoadSavedCardsDataAccess;
@@ -14,6 +17,13 @@ import org.json.JSONObject;
 import java.awt.*;
 
 import static Classes.Settings.SettingConstants.*;
+import Classes.retrieveInfo.APIClass;
+import Classes.retrieveInfo.AnimalFactory;
+import AppPkg.Controllers.SearchController;
+import AppPkg.Controllers.SearchResult;
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+import static Classes.Settings.SettingConstants.DEFAULT_STYLE;
+import static Classes.Settings.SettingConstants.HEADING_FONT_SIZE;
 
 public class  MainMenu extends javax.swing.JFrame
 {
@@ -21,8 +31,11 @@ public class  MainMenu extends javax.swing.JFrame
     private APIClass api = new APIClass();
     private FuzzySearchProvider fuzzyProvider = new AnimalFuzzySearch();
 
+    private final SearchController searchController;
+
     public MainMenu()
     {
+        this.searchController = new SearchController(this.api, this.fuzzyProvider, new AnimalFactory());
         initComponents();
         updateLabelStyle();// apply setting changes
     }
@@ -30,6 +43,7 @@ public class  MainMenu extends javax.swing.JFrame
     public MainMenu(FuzzySearchProvider fuzzyProvider, APIClass api){
         this.fuzzyProvider = fuzzyProvider;
         this.api = api;
+        this.searchController = new SearchController(this.api, this.fuzzyProvider, new AnimalFactory());
         initComponents();
         updateLabelStyle();
     }
@@ -200,82 +214,34 @@ public class  MainMenu extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_btnSettingsActionPerformed
 
-    private String linkName(String animal_name){
-        return animal_name.replace(" ", "%20");
-    }
-
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSearchActionPerformed
     {//GEN-HEADEREND:event_btnSearchActionPerformed
-        String animalName = txfAnimal.getText().toLowerCase().trim();  // gets the animal name, and makes it lowercase
+        String query = txfAnimal.getText();
+        SearchResult res = searchController.search(query);
 
-        if (animalName.isEmpty()){  // ensures the user has given an input. if not, terminates teh call
-            lblError.setText("Please select an animal name.");
-        } else {
-            APIClass aClass = this.api;               // instantiates APIClass
-
-            if (animalName.contains(" "))
-            {
-                animalName = linkName(animalName);
+        if (!res.isSuccess()) {
+            if (res.getSuggestion() != null && !res.getSuggestion().isEmpty()) {
+                lblError.setText(res.getMessage());
+                lblError.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                lblError.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        txfAnimal.setText(res.getSuggestion());
+                        btnSearchActionPerformed(null);
+                    }
+                });
+            } else {
+                lblError.setText(res.getMessage());
             }
+            return;
+        }
 
-            String result = aClass.getAnimalData(animalName);       // calls getAnimalData to get the JSON data of the animal
-            if (result == null) {
-
-                //fixed
-                FuzzySearchProvider fuzzy = this.fuzzyProvider;
-                String suggestion = fuzzy.getSuggestion(animalName);
-
-                if (suggestion != null && !suggestion.isEmpty()) {
-                    String htmlText = "<html>Animal not found. Did you mean: <a href=''>" + suggestion + "</a>?</html>";
-                    lblError.setText(htmlText);
-
-                    // Add click listener to the label
-                    lblError.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    lblError.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mouseClicked(java.awt.event.MouseEvent evt) {
-                            // When clicked, search for the suggested animal
-                            txfAnimal.setText(suggestion);
-                            btnSearchActionPerformed(null); // Trigger search again
-                        }
-                    });
-                } else {
-                    lblError.setText("Animal '" + animalName + "' not found.");
-                }
-                return;
-            }
-            int numResults = aClass.numResults();                   // gets the number of animals' data that was returned
-            Animal searched = new Animal(result);
-
-            System.out.println(result);
-
-
-            if (numResults == 0)   // asks the user to ensure they entered the correct animal because an animal with the user inputted spelling doesn't exist in the API
-            {
-                lblError.setText("Please double check animal name.");
-            }
-            if (numResults == 1)    // if there is only 1 outputting result, open SuccesfulSearch because the animal's data will be output there
-            {
-                new SuccesfulSearch(searched).setVisible(true);
-                this.dispose();
-            }
-            if (numResults >= 2)
-            {
-                // makes an array of all the animals that the api returns with teh search
-                JSONArray jsonArray = new JSONArray(result);
-                Animal[] animals = new Animal[numResults];
-                for (int i = 0; i < numResults; i++) {
-                    JSONObject singleAnimal = jsonArray.getJSONObject(i);
-
-                    // Wrap it in a single-element JSONArray (your constructor expects this)
-                    JSONArray singleArray = new JSONArray();
-                    singleArray.put(singleAnimal);
-
-                    animals[i] = new Animal(singleArray.toString());
-                }
-
-                new MultiSuccesfulSearch(animals).setVisible(true);
-                this.dispose();
-            }
+        int n = res.getAnimals().length;
+        if (n == 1) {
+            new SuccesfulSearch(res.getAnimals()[0]).setVisible(true);
+            this.dispose();
+        } else if (n >= 2) {
+            new MultiSuccesfulSearch(res.getAnimals()).setVisible(true);
+            this.dispose();
         }
 
     }//GEN-LAST:event_btnSearchActionPerformed

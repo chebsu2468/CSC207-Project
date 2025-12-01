@@ -3,8 +3,6 @@ package Classes.Settings;
 import java.awt.Color;
 import java.awt.Font;
 
-import static Classes.Settings.SettingConstants.DEFAULT_STYLE;
-
 /**
  * View model representing text settings for display in the UI.
  * Encapsulates the color and font (with style and size) for rendering text.
@@ -31,7 +29,7 @@ public class ViewModel {
      */
     public ViewModel(Color color, String font, int size) {
         this.color = color;
-        this.font = new Font(font, DEFAULT_STYLE, size);
+        this.font = new Font(font, SettingConstants.DEFAULT_STYLE, size);
     }
 
     /**

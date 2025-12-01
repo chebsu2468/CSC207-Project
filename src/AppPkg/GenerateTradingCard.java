@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 import Classes.GenerateTradingCard.CardAppearanceConstants;
 import Classes.GenerateTradingCard.TradingCardService;
 import Classes.GenerateTradingCard.TradingCardViewModel;

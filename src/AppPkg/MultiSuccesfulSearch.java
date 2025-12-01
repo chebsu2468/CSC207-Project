@@ -1,6 +1,6 @@
 package AppPkg;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 
 import javax.swing.*;
 
@@ -42,7 +42,6 @@ public class MultiSuccesfulSearch extends javax.swing.JFrame
     public MultiSuccesfulSearch()
     {
         initComponents();
-        JOptionPane.showMessageDialog(null, "Search Successful");
     }
 
     @SuppressWarnings("unchecked")

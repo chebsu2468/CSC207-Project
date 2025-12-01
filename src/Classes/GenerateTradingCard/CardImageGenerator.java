@@ -2,7 +2,7 @@ package Classes.GenerateTradingCard;
 
 import java.awt.image.BufferedImage;
 
-import Classes.Animal;
+import Classes.retrieveInfo.Animal;
 
 /**
  * A generator interface responsible for producing a trading card image.
