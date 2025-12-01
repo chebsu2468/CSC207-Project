@@ -1,15 +1,20 @@
 package AppPkg.Controllers;
 
-import Classes.retrieveInfo.APIClass;
-import Classes.retrieveInfo.Animal;
-import Classes.Filter.FuzzySearch.FuzzySearchProvider;
-import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
-import Classes.retrieveInfo.AnimalFactory;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
+import Classes.Filter.FuzzySearch.FuzzySearchProvider;
+import Classes.retrieveInfo.Animal;
+import Classes.retrieveInfo.AnimalFactory;
+import Classes.retrieveInfo.APIClass;
+
+/**
+ * Controller responsible for searching animals via the API,
+ * handling single/multiple results and fuzzy suggestions.
+ */
 public class SearchController {
+
     private final APIClass api;
     private final FuzzySearchProvider fuzzy;
     private final AnimalFactory factory;
@@ -20,60 +25,112 @@ public class SearchController {
         this.factory = new AnimalFactory();
     }
 
-    // For dependency injection / testing:
     public SearchController(APIClass api, FuzzySearchProvider fuzzy, AnimalFactory factory) {
-        this.api = api != null ? api : new APIClass();
-        this.fuzzy = fuzzy != null ? fuzzy : new AnimalFuzzySearch();
-        this.factory = factory != null ? factory : new AnimalFactory();
+        if (api == null) {
+            this.api = new APIClass();
+        }
+        else {
+            this.api = api;
+        }
+        if (fuzzy == null) {
+            this.fuzzy = new AnimalFuzzySearch();
+        }
+        else {
+            this.fuzzy = fuzzy;
+        }
+        if (factory == null) {
+            this.factory = new AnimalFactory();
+        }
+        else {
+            this.factory = factory;
+        }
     }
 
-    public SearchResult search(String rawQuery) {
-        if (rawQuery == null) rawQuery = "";
-        String animalName = rawQuery.toLowerCase().trim();
+    /**
+     * Searches for animals using the API.
+     *
+     * @param rawQuery user input
+     * @return SearchResult containing success, message, animals, and suggestion
+     */
+    public SearchResult search(final String rawQuery) {
 
-        if (animalName.isEmpty()) {
-            return new SearchResult(false, "Please select an animal name.", new Animal[0], null);
+        final String query = normalizeQuery(rawQuery);
+        final SearchResult result;
+
+        if (query.isEmpty()) {
+            result = noQueryResult();
         }
+        else {
+            final String apiQuery = encodeSpaces(query);
+            final String jsonData = api.getAnimalData(apiQuery);
 
-        String qForLink = animalName;
-        if (animalName.contains(" ")) {
-            qForLink = animalName.replace(" ", "%20");
-        }
-
-        String result = api.getAnimalData(qForLink);
-        if (result == null) {
-            // try fuzzy
-            String suggestion = fuzzy.getSuggestion(animalName);
-            if (suggestion != null && !suggestion.isEmpty()) {
-                String htmlText = "<html>Animal not found. Did you mean: <a href=''>" + suggestion + "</a>?</html>";
-                return new SearchResult(false, htmlText, new Animal[0], suggestion);
-            } else {
-                return new SearchResult(false, "Animal '" + animalName + "' not found.", new Animal[0], null);
+            if (jsonData == null || jsonData.trim().isEmpty()) {
+                result = handleNoData(query);
+            }
+            else {
+                result = parseJsonResults(jsonData);
             }
         }
 
-        int numResults = api.numResults();
-        if (numResults == 0) {
-            return new SearchResult(false, "Please double check animal name.", new Animal[0], null);
+        return result;
+    }
+
+    private String normalizeQuery(final String input) {
+        String result = "";
+        if (input != null) {
+            result = input.toLowerCase().trim();
+        }
+        return result;
+    }
+
+    private String encodeSpaces(final String input) {
+        String result = input;
+        if (input.contains(" ")) {
+            result = input.replace(" ", "%20");
+        }
+        return result;
+    }
+
+    private SearchResult noQueryResult() {
+        return new SearchResult(false, "Please select an animal name.", new Animal[0], null);
+    }
+
+    private SearchResult handleNoData(final String query) {
+        final SearchResult result;
+        final String suggestion = fuzzy.getSuggestion(query);
+        if (suggestion != null && !suggestion.isEmpty()) {
+            final String htmlText = "<html>Animal not found. Did you mean: <a href=''>" + suggestion + "</a>?</html>";
+            result = new SearchResult(false, htmlText, new Animal[0], suggestion);
+        }
+        else {
+            result = new SearchResult(false, "Animal '" + query + "' not found.", new Animal[0], null);
+        }
+        return result;
+    }
+
+    private SearchResult parseJsonResults(final String jsonData) {
+        final SearchResult result;
+        final JSONArray array = new JSONArray(jsonData);
+        final int count = array.length();
+
+        if (count == 0) {
+            result = new SearchResult(false, "Please double check animal name.", new Animal[0], null);
+        }
+        else if (count == 1) {
+            final Animal singleAnimal = factory.fromJsonArrayString(jsonData);
+            result = new SearchResult(true, null, new Animal[]{singleAnimal}, null);
+        }
+        else {
+            final Animal[] animals = new Animal[count];
+            for (int i = 0; i < count; i++) {
+                final JSONObject obj = array.getJSONObject(i);
+                final JSONArray singleArray = new JSONArray();
+                singleArray.put(obj);
+                animals[i] = factory.fromJsonArrayString(singleArray.toString());
+            }
+            result = new SearchResult(true, null, animals, null);
         }
 
-        if (numResults == 1) {
-            // original Animal constructor accepted a single-element JSON array string
-            Animal searched = factory.fromJsonArrayString(result);
-            return new SearchResult(true, null, new Animal[]{searched}, null);
-        }
-
-        // numResults >= 2: create array of Animals
-        JSONArray jsonArray = new JSONArray(result);
-        Animal[] animals = new Animal[numResults];
-        for (int i = 0; i < numResults; i++) {
-            JSONObject singleAnimal = jsonArray.getJSONObject(i);
-            // wrap into single-element array (keeps compatibility with original Animal constructor)
-            JSONArray singleArray = new JSONArray();
-            singleArray.put(singleAnimal);
-            animals[i] = factory.fromJsonArrayString(singleArray.toString());
-        }
-
-        return new SearchResult(true, null, animals, null);
+        return result;
     }
 }

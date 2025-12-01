@@ -1,13 +1,19 @@
 package AppPkg;
-import AppPkg.Controllers.SearchController;
-import AppPkg.Controllers.SearchResult;
+
+// Standard Java packages
+import java.awt.Cursor;
+import java.awt.Font;
+
+// Project imports - Classes package
 import Classes.Filter.FuzzySearch.AnimalFuzzySearch;
 import Classes.Filter.FuzzySearch.FuzzySearchProvider;
-import Classes.retrieveInfo.*;
-
-import java.awt.*;
-
-import static Classes.Settings.SettingConstants.*;
+import Classes.retrieveInfo.APIClass;
+import Classes.retrieveInfo.AnimalFactory;
+import AppPkg.Controllers.SearchController;
+import AppPkg.Controllers.SearchResult;
+import static Classes.Settings.SettingConstants.DEFAULT_SETTINGS_FILE;
+import static Classes.Settings.SettingConstants.DEFAULT_STYLE;
+import static Classes.Settings.SettingConstants.HEADING_FONT_SIZE;
 
 public class  MainMenu extends javax.swing.JFrame
 {
@@ -179,37 +185,33 @@ public class  MainMenu extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_btnSettingsActionPerformed
 
-//    private String linkName(String animal_name){
-//        return animal_name.replace(" ", "%20");
-//    }
-
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSearchActionPerformed
     {//GEN-HEADEREND:event_btnSearchActionPerformed
         String query = txfAnimal.getText();
         SearchResult res = searchController.search(query);
 
-        if (!res.success) {
-            if (res.suggestion != null && !res.suggestion.isEmpty()) {
-                lblError.setText(res.message);
+        if (!res.isSuccess()) {
+            if (res.getSuggestion() != null && !res.getSuggestion().isEmpty()) {
+                lblError.setText(res.getMessage());
                 lblError.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 lblError.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        txfAnimal.setText(res.suggestion);
+                        txfAnimal.setText(res.getSuggestion());
                         btnSearchActionPerformed(null);
                     }
                 });
             } else {
-                lblError.setText(res.message);
+                lblError.setText(res.getMessage());
             }
             return;
         }
 
-        int n = res.animals.length;
+        int n = res.getAnimals().length;
         if (n == 1) {
-            new SuccesfulSearch(res.animals[0]).setVisible(true);
+            new SuccesfulSearch(res.getAnimals()[0]).setVisible(true);
             this.dispose();
         } else if (n >= 2) {
-            new MultiSuccesfulSearch(res.animals).setVisible(true);
+            new MultiSuccesfulSearch(res.getAnimals()).setVisible(true);
             this.dispose();
         }
 
