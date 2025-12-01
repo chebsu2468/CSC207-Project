@@ -38,7 +38,7 @@ public final class AnimalConverter {
     private static final String HYPHEN = "-";
     private static final String SPACE = " ";
 
-    private AnimalConverter() {
+    AnimalConverter() {
         // utility class - prevent instantiation
     }
 

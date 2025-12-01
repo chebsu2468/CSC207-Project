@@ -15,15 +15,15 @@ public final class CompareAnimalsInteractor
      * Array of all categories used for animal comparison.
      */
     private static final String[] EXPECTED_CATEGORIES = {
-        "Group",
-        "Diet",
-        "Lifestyle",
-        "Location",
-        "Prey",
-        "Habitat",
-        "Lifespan",
-        "Height",
-        "Weight",
+            "Group",
+            "Diet",
+            "Lifestyle",
+            "Location",
+            "Prey",
+            "Habitat",
+            "Lifespan",
+            "Height",
+            "Weight",
     };
 
     /**
