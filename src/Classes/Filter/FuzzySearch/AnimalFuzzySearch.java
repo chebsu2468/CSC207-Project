@@ -9,7 +9,7 @@ public class AnimalFuzzySearch implements FuzzySearchProvider {
         private static final String PROMPT_TEMPLATE =
             "The user searched for: \"%s\".\n"
                     + "Suggest ONLY one correct animal name they might have meant. "
-                    + "Remember its a spelling mistake"
+                    + "Remember its a spelling mistake (singular animal)"
                     + "Return exactly one name, no extra text, no commas, no explanations.";
 
     /*
