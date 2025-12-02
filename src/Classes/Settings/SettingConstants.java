@@ -38,6 +38,7 @@ public final class SettingConstants {
     public static final String SIZE_LABEL = "Font Size";
     public static final String FONT_LABEL = "Font";
     public static final String DEFAULT_SETTINGS_FILE = "settings.csv";
+    public static final String TEST_SETTINGS_FILE = "testSettings.csv";
     public static final String HOME_ICON_FILE = "/imagesPkg/home.png";
     public static final String SAVE_SETTING_HEADER_REGEX = "textSize,textColorR,textColorG,textColorB,fontName\n";
     public static final String SAVE_SETTING_INFO_FORMAT = "%d,%d,%d,%d,%s\n";
