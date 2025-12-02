@@ -131,7 +131,7 @@ public class TextSettingUseCaseTest {
                 font.getName()
         );
         assertEquals(
-                SettingConstants.DEFAULT_FONT_SIZE,
+                SettingConstants.FONT_SIZE_ONE,
                 font.getSize()
         );
         assertEquals(
